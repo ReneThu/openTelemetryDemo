@@ -1,4 +1,15 @@
 plugins {
-	id 'java'
+	id 'com.bmuschko.docker-remote-api' version '9.3.2' // Docker plugin
+}
+
+
+task buildMainServiceDockerImage(type: com.bmuschko.gradle.docker.tasks.image.DockerBuildImage) {
+	group = "docker"
+	description = "Builds the Docker image for the mainService subproject"
+
+	inputDir = file("$projectDir/mainService")
+//	tags = ["mainservice:latest"]
+
+	dependsOn(":mainService:bootJar")
 }
 
