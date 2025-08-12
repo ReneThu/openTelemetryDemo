@@ -1,14 +1,17 @@
 plugins {
-	id 'com.bmuschko.docker-remote-api' version '9.3.2' // Docker plugin
+	id 'com.bmuschko.docker-remote-api' version '9.3.2'
 }
 
+docker {
+	url = "unix:///var/run/docker.sock"
+}
 
 tasks.register("buildMainServiceDockerImage", com.bmuschko.gradle.docker.tasks.image.DockerBuildImage) {
 	group = "docker"
 	description = "Builds the Docker image for the mainService subproject"
 
 	inputDir.set(file("$projectDir/mainService"))
-	images.add("mainService:latest")
+	images.add("mainservice:latest")
 
 	dependsOn(":mainService:bootJar")
 }
@@ -18,16 +21,16 @@ tasks.register("buildGuestBookServiceDockerImage", com.bmuschko.gradle.docker.ta
 	description = "Builds the Docker image for the guestBook subproject"
 
 	inputDir.set(file("$projectDir/guestBookService"))
-	images.add("guestBookService:latest")
+	images.add("guestbookservice:latest")
 
 	dependsOn(":guestBookService:bootJar")
 }
 
 tasks.register("buildAllDockerImages") {
 	group = "docker"
-	description = "Builds all Docker images in subprojects"
+	description = "Builds all Docker images"
 
-	// Find all DockerBuildImage tasks in subprojects
-	dependsOn(subprojects.collect { it.tasks.withType(com.bmuschko.gradle.docker.tasks.image.DockerBuildImage) })
+	dependsOn("buildMainServiceDockerImage", "buildGuestBookServiceDockerImage")
 }
+
 

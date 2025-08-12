@@ -2,10 +2,13 @@ version: '3.8'
 
 services:
   mainService:
-    image: mainService:latest
+    image: mainservice:latest
     ports:
       - "8080:8080"
+    container_name: main_service_container
+
   guestBookService:
-    image: guestBookService:latest
+    image: guestbookservice:latest
     ports:
-      - "8081:8081"
+      - "8081:8080"
+    container_name: guestbook_service_container
