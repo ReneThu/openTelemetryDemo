@@ -15,6 +15,17 @@ services:
       - "8081:8081"
     container_name: guestbook_service_container
 
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
