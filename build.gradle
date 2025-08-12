@@ -3,12 +3,12 @@ plugins {
 }
 
 
-task buildMainServiceDockerImage(type: com.bmuschko.gradle.docker.tasks.image.DockerBuildImage) {
+tasks.register("buildMainServiceDockerImage", com.bmuschko.gradle.docker.tasks.image.DockerBuildImage) {
 	group = "docker"
 	description = "Builds the Docker image for the mainService subproject"
 
-	inputDir = file("$projectDir/mainService")
-//	tags = ["mainservice:latest"]
+	inputDir.set(file("$projectDir/mainService"))
+	images.add("mainservice:latest")
 
 	dependsOn(":mainService:bootJar")
 }
