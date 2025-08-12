@@ -8,8 +8,26 @@ tasks.register("buildMainServiceDockerImage", com.bmuschko.gradle.docker.tasks.i
 	description = "Builds the Docker image for the mainService subproject"
 
 	inputDir.set(file("$projectDir/mainService"))
-	images.add("mainservice:latest")
+	images.add("mainService:latest")
 
 	dependsOn(":mainService:bootJar")
+}
+
+tasks.register("buildGuestBookServiceDockerImage", com.bmuschko.gradle.docker.tasks.image.DockerBuildImage) {
+	group = "docker"
+	description = "Builds the Docker image for the guestBook subproject"
+
+	inputDir.set(file("$projectDir/guestBookService"))
+	images.add("guestBookService:latest")
+
+	dependsOn(":guestBookService:bootJar")
+}
+
+tasks.register("buildAllDockerImages") {
+	group = "docker"
+	description = "Builds all Docker images in subprojects"
+
+	// Find all DockerBuildImage tasks in subprojects
+	dependsOn(subprojects.collect { it.tasks.withType(com.bmuschko.gradle.docker.tasks.image.DockerBuildImage) })
 }
 

@@ -1,7 +1,11 @@
 version: '3.8'
 
 services:
-  mainservice:
-    image: mainservice:latest
+  mainService:
+    image: mainService:latest
     ports:
       - "8080:8080"
+  guestBookService:
+    image: guestBookService:latest
+    ports:
+      - "8081:8081"

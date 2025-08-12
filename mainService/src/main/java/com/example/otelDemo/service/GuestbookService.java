@@ -2,27 +2,45 @@ package com.example.otelDemo.service;
 
 import com.example.otelDemo.model.GuestbookEntry;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class GuestbookService {
 
-    private final List<GuestbookEntry> entries = new CopyOnWriteArrayList<>();
+    private final RestTemplate restTemplate;
+
+    private final String guestbookServiceUrl = "http://localhost:8081/api/guestbook";
+
+    public GuestbookService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public List<GuestbookEntry> findAll() {
-        List<GuestbookEntry> copy = new ArrayList<>(entries);
-        Collections.reverse(copy);               // newest first
-        return copy;
+        try {
+            GuestbookEntry[] entries = restTemplate.getForObject(
+                    guestbookServiceUrl + "/entries", GuestbookEntry[].class);
+            if (entries != null) {
+                List<GuestbookEntry> entryList = Arrays.asList(entries);
+                Collections.reverse(entryList); // newest first
+                return entryList;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
     }
 
     public void addEntry(String name, String message) {
-        GuestbookEntry entry =
-                new GuestbookEntry(name, message, LocalDateTime.now());
-        entries.add(entry);
+        try {
+            restTemplate.postForObject(
+                    guestbookServiceUrl + "/entries?name=" + name + "&message=" + message,
+                    null, String.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
