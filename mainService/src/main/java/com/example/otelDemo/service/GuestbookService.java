@@ -13,7 +13,7 @@ public class GuestbookService {
 
     private final RestTemplate restTemplate;
 
-    private final String guestbookServiceUrl = "http://localhost:8081/api/guestbook";
+    private final String guestbookServiceUrl = "http://guestBookService:8081/api/guestbook";
 
     public GuestbookService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
