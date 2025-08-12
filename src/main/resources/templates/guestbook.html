@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>The Guest-Book</title>
+    <link href="https://fonts.cdnfonts.com/css/comic-sans-ms" rel="stylesheet" />
+
+    <style>
+        @keyframes rainbow {
+            0%   { background-position: 0 0; }
+            100% { background-position: 1000px 0; }
+        }
+        body {
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            background: linear-gradient(90deg,
+                       red, orange, yellow, green,
+                       cyan, blue, violet, red);
+            background-size: 1000px 100%;
+            animation: rainbow 30s linear infinite;
+            padding: 2rem;
+            color: #000;
+        }
+        h1 { text-align: center; }
+        form {
+            background: #fff8;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: .5rem;
+            margin: .5rem 0;
+            border: 2px dashed hotpink;
+            border-radius: 4px;
+        }
+        button {
+            font-weight: bold;
+            padding: .5rem 1rem;
+            background: hotpink;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .entry {
+            background: #ffffffe0;
+            border-left: 6px solid hotpink;
+            margin-bottom: 1rem;
+            padding: .75rem;
+        }
+    </style>
+</head>
+<body>
+<h1>Sign my Guest-Book</h1>
+
+<form th:action="@{/guestbook}" th:object="${newEntry}" method="post">
+    <input type="text" th:field="*{name}" placeholder="Your name" required/>
+    <textarea rows="4" th:field="*{message}"
+              placeholder="Write something" required></textarea>
+    <button type="submit">Sign!</button>
+</form>
+
+<section>
+    <div th:each="entry : ${entries}" class="entry">
+        <strong th:text="${entry.name}">Name</strong>
+        wrote at
+        <span th:text="${#temporals.format(entry.timestamp, 'yyyy-MM-dd HH:mm')}">time</span>:
+        <br>
+        <span th:text="${entry.message}">message</span>
+    </div>
+</section>
+</body>
+</html>
