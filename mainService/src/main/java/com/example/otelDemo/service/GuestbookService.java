@@ -1,6 +1,6 @@
 package com.example.otelDemo.service;
 
-import com.example.otelDemo.model.GuestbookEntry;
+import com.example.otelDemo.dto.GuestbookDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,19 +12,20 @@ import java.util.List;
 public class GuestbookService {
 
     private final RestTemplate restTemplate;
-
+    private final MessageService messageProducer;
     private final String guestbookServiceUrl = "http://guestBookService:8081/api/guestbook";
 
-    public GuestbookService(RestTemplate restTemplate) {
+    public GuestbookService(RestTemplate restTemplate, MessageService messageProducer) {
         this.restTemplate = restTemplate;
+        this.messageProducer = messageProducer;
     }
 
-    public List<GuestbookEntry> findAll() {
+    public List<GuestbookDto> findAll() {
         try {
-            GuestbookEntry[] entries = restTemplate.getForObject(
-                    guestbookServiceUrl + "/entries", GuestbookEntry[].class);
+            GuestbookDto[] entries = restTemplate.getForObject(
+                    guestbookServiceUrl + "/entries", GuestbookDto[].class);
             if (entries != null) {
-                List<GuestbookEntry> entryList = Arrays.asList(entries);
+                List<GuestbookDto> entryList = Arrays.asList(entries);
                 Collections.reverse(entryList); // newest first
                 return entryList;
             }
@@ -36,9 +37,10 @@ public class GuestbookService {
 
     public void addEntry(String name, String message) {
         try {
-            restTemplate.postForObject(
+            GuestbookDto entry = restTemplate.postForEntity(
                     guestbookServiceUrl + "/entries?name=" + name + "&message=" + message,
-                    null, String.class);
+                    null, GuestbookDto.class).getBody();
+            messageProducer.sendNotification(entry.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }

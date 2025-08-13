@@ -1,18 +1,28 @@
-package com.example.otelDemo.model;
+package com.example.otelDemo.dto;
 
 import java.time.LocalDateTime;
 
-public class GuestbookEntry {
+public class GuestbookDto {
+    private Long id;
     private String name;
     private String message;
     private LocalDateTime timestamp;
 
-    public GuestbookEntry() {}
+    public GuestbookDto() {
+    }
 
-    public GuestbookEntry(String name, String message, LocalDateTime timestamp) {
+    public GuestbookDto(String name, String message, LocalDateTime timestamp) {
         this.name = name;
         this.message = message;
         this.timestamp = timestamp;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -8,8 +8,12 @@ services:
     container_name: main_service_container
     depends_on:
       - guestBookService
+      - rabbitmq
     networks:
       - app-network
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
 
   guestBookService:
     image: guestbookservice:latest
@@ -39,6 +43,15 @@ services:
       MYSQL_DATABASE: mydatabase
     ports:
       - "3306:3306"
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_container
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - app-network
 

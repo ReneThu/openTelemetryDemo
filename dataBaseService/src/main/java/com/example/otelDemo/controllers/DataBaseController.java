@@ -24,9 +24,9 @@ public class DataBaseController {
     }
 
     @PostMapping("/entries")
-    public ResponseEntity<String> addEntry(@RequestBody GuestbookEntry entry) {
+    public ResponseEntity<GuestbookEntry> addEntry(@RequestBody GuestbookEntry entry) {
         entry.setTimestamp(LocalDateTime.now());
-        repository.save(entry);
-        return ResponseEntity.ok("Entry saved successfully!");
+        GuestbookEntry savedEntry = repository.save(entry);
+        return ResponseEntity.ok(savedEntry);
     }
 }

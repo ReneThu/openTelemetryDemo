@@ -1,6 +1,6 @@
 package com.example.otelDemo.controllers;
 
-import com.example.otelDemo.model.GuestbookEntry;
+import com.example.otelDemo.dto.GuestbookDto;
 import com.example.otelDemo.service.GuestbookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +20,12 @@ public class GuestbookController {
     @GetMapping("/guestbook")
     public String showGuestbook(Model model) {
         model.addAttribute("entries", service.findAll());
-        model.addAttribute("newEntry", new GuestbookEntry());   // backing-object for form
+        model.addAttribute("newEntry", new GuestbookDto());
         return "guestbook";
     }
 
     @PostMapping("/guestbook")
-    public String addEntry(@ModelAttribute("newEntry") GuestbookEntry form) {
+    public String addEntry(@ModelAttribute("newEntry") GuestbookDto form) {
         service.addEntry(form.getName(), form.getMessage());
         return "redirect:/guestbook";
     }
