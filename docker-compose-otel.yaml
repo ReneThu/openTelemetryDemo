@@ -9,14 +9,15 @@ services:
     depends_on:
       - guestBookService
       - rabbitmq
+      - jaeger
     networks:
       - app-network
     environment:
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
       JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
-    volumes:
-      - ./otel:/otel
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
 
   guestBookService:
     image: guestbookservice:latest
@@ -25,12 +26,13 @@ services:
     container_name: guestbook_service_container
     depends_on:
       - dataBaseService
+      - jaeger
     networks:
       - app-network
     environment:
       JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
-    volumes:
-      - ./otel:/otel
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
 
   dataBaseService:
     image: databaseservice:latest
@@ -39,12 +41,13 @@ services:
     container_name: database_service_container
     depends_on:
       - mysql
+      - jaeger
     networks:
       - app-network
     environment:
       JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
-    volumes:
-      - ./otel:/otel
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
 
   mysql:
     image: mysql:8.0
@@ -64,14 +67,15 @@ services:
     container_name: email_service_container
     depends_on:
       - rabbitmq
+      - jaeger
     networks:
       - app-network
     environment:
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
       JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
-    volumes:
-      - ./otel:/otel
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -86,14 +90,9 @@ services:
     image: jaegertracing/all-in-one:1.46
     container_name: jaeger
     ports:
-      - "5775:5775/udp"
-      - "6831:6831/udp"
-      - "6832:6832/udp"
-      - "5778:5778"
-      - "16686:16686"
-      - "14268:14268"
-      - "14250:14250"
-      - "9411:9411"
+      - "16686:16686"  # Jaeger UI
+      - "4317:4317"    # OTLP gRPC
+      - "4318:4318"    # OTLP HTTP
     networks:
       - app-network
 
