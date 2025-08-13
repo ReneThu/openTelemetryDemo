@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS guestbook_entry (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    timestamp DATETIME NOT NULL
+);

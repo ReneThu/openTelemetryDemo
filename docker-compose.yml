@@ -14,6 +14,18 @@ services:
     ports:
       - "8081:8081"
     container_name: guestbook_service_container
+    depends_on:
+      - dataBaseService
+
+  dataBaseService:
+    image: databaseservice:latest
+    ports:
+      - "8082:8082"
+    container_name: database_service_container
+    depends_on:
+      - mysql
+    networks:
+      - app-network
 
   mysql:
     image: mysql:8.0
