@@ -26,11 +26,21 @@ tasks.register("buildGuestBookServiceDockerImage", com.bmuschko.gradle.docker.ta
 	dependsOn(":guestBookService:bootJar")
 }
 
+tasks.register("buildDataBaseServiceDockerImage", com.bmuschko.gradle.docker.tasks.image.DockerBuildImage) {
+	group = "docker"
+	description = "Builds the Docker image for the dataBaseService subproject"
+
+	inputDir.set(file("$projectDir/dataBaseService"))
+	images.add("databaseservice:latest")
+
+	dependsOn(":dataBaseService:bootJar")
+}
+
 tasks.register("buildAllDockerImages") {
 	group = "docker"
 	description = "Builds all Docker images"
 
-	dependsOn("buildMainServiceDockerImage", "buildGuestBookServiceDockerImage")
+	dependsOn("buildMainServiceDockerImage", "buildGuestBookServiceDockerImage", "buildDataBaseServiceDockerImage")
 }
 
 
