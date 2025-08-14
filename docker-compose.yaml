@@ -7,8 +7,10 @@ services:
       - "8080:8080"
     container_name: main_service_container
     depends_on:
-      - guestBookService
-      - rabbitmq
+      guestBookService:
+        condition: service_healthy
+      dataBaseService:
+        condition: service_healthy
     networks:
       - app-network
     environment:
@@ -24,6 +26,11 @@ services:
       - dataBaseService
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
 
   dataBaseService:
     image: databaseservice:latest
@@ -34,6 +41,11 @@ services:
       - mysql
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
 
   mysql:
     image: mysql:8.0

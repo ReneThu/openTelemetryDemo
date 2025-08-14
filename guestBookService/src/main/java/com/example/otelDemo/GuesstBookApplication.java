@@ -16,5 +16,4 @@ public class GuesstBookApplication {
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
-
 }

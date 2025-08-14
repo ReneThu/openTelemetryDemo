@@ -7,9 +7,10 @@ services:
       - "8080:8080"
     container_name: main_service_container
     depends_on:
-      - guestBookService
-      - rabbitmq
-      - jaeger
+      guestBookService:
+        condition: service_healthy
+      dataBaseService:
+        condition: service_healthy
     networks:
       - app-network
     environment:
@@ -26,13 +27,17 @@ services:
     container_name: guestbook_service_container
     depends_on:
       - dataBaseService
-      - jaeger
     networks:
       - app-network
     environment:
       JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
       OTEL_EXPORTER_OTLP_PROTOCOL: grpc
       OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
 
   dataBaseService:
     image: databaseservice:latest
@@ -48,6 +53,11 @@ services:
       JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
       OTEL_EXPORTER_OTLP_PROTOCOL: grpc
       OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
 
   mysql:
     image: mysql:8.0
@@ -90,9 +100,9 @@ services:
     image: jaegertracing/all-in-one:1.46
     container_name: jaeger
     ports:
-      - "16686:16686"  # Jaeger UI
-      - "4317:4317"    # OTLP gRPC
-      - "4318:4318"    # OTLP HTTP
+      - "16686:16686"
+      - "4317:4317"
+      - "4318:4318"
     networks:
       - app-network
 
