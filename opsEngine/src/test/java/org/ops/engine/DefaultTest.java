@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2024 original authors
+ * Copyright 2017-2025 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,33 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.micronaut;
+package org.ops.engine;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import io.micronaut.http.HttpRequest;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.client.HttpClient;
-import io.micronaut.http.client.annotation.Client;
+import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 import jakarta.inject.Inject;
 
-@MicronautTest // <1>
-public class HelloControllerTest {
+@MicronautTest
+class DefaultTest {
 
     @Inject
-    @Client("/")  // <2>
-    HttpClient client;
+    EmbeddedApplication<?> application;
 
     @Test
-    public void testHello() {
-        HttpRequest<?> request = HttpRequest.GET("/hello").accept(MediaType.TEXT_PLAIN);  // <3>
-        String body = client.toBlocking().retrieve(request);
-
-        assertNotNull(body);
-        assertEquals("Hello World", body);
+    void testItWorks() {
+        Assertions.assertTrue(application.isRunning());
     }
+
 }

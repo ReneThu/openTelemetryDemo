@@ -1,12 +1,11 @@
 plugins {
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.micronaut.application") version "4.4.4"
-    id("com.diffplug.spotless") version "6.23.3"
-    id("io.micronaut.aot") version "4.4.4"
+    id("io.micronaut.application") version "4.5.4"
+    id("com.gradleup.shadow") version "8.3.7"
+    id("io.micronaut.aot") version "4.5.4"
 }
 
 version = "0.1"
-group = "example.micronaut"
+group = "org.ops.engine"
 
 repositories {
     mavenCentral()
@@ -23,11 +22,12 @@ dependencies {
 
 
 application {
-    mainClass = "example.micronaut.Application"
+    mainClass = "org.ops.engine.Application"
 }
+
 java {
-    sourceCompatibility = JavaVersion.toVersion("21")
-    targetCompatibility = JavaVersion.toVersion("21")
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
 }
 
 
@@ -54,7 +54,3 @@ micronaut {
     }
 }
 
-
-tasks.named("dockerfileNative") {
-    jdkVersion = "21"
-}
