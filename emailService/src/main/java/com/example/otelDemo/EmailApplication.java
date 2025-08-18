@@ -1,5 +1,6 @@
 package com.example.otelDemo;
 
+import org.springframework.amqp.core.Queue;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -17,4 +18,8 @@ public class EmailApplication {
 		return new RestTemplate();
 	}
 
+	@Bean
+	public Queue guestBookNotificationsQueue() {
+		return new Queue("guestBookNotifications", true);
+	}
 }

@@ -15,7 +15,6 @@ public class HealthController {
     @GetMapping("/health")
     public ResponseEntity<String> healthCheck() {
         try {
-            // Optionally check database service health
             String databaseHealth = restTemplate.getForObject("http://dataBaseService:8082/health", String.class);
             if (databaseHealth != null && databaseHealth.contains("healthy")) {
                 return ResponseEntity.ok("GuestBook Service is healthy");
