@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Docker Logs</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #000;
+            color: #0f0;
+            margin: 0;
+            padding: 0;
+        }
+        #log-container {
+            padding: 10px;
+            white-space: pre-wrap;
+            overflow-y: auto;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+<div id="log-container"></div>
+<script>
+    const logContainer = document.getElementById('log-container');
+    const socket = new WebSocket(`ws://${window.location.host}/docker/logs/${window.location.pathname.split('/').pop()}`);
+
+    socket.onmessage = (event) => {
+        const logLine = document.createElement('div');
+        logLine.textContent = event.data;
+        logContainer.appendChild(logLine);
+        logContainer.scrollTop = logContainer.scrollHeight; // Auto-scroll to the latest log
+    };
+
+    socket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+    };
+
+    socket.onclose = () => {
+        const closedMessage = document.createElement('div');
+        closedMessage.textContent = 'Connection closed.';
+        closedMessage.style.color = 'red';
+        logContainer.appendChild(closedMessage);
+    };
+</script>
+</body>
+</html>

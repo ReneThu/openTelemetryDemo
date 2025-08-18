@@ -4,20 +4,25 @@ import jakarta.inject.Singleton;
 import org.ops.engine.entity.DockerComposeDTO;
 import org.ops.engine.entity.Status;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Singleton
 public class DockerComposeService {
     private final Map<String, DockerComposeDTO> runningComposes = new ConcurrentHashMap<>();
+    private final Map<String, Process> processMap = new ConcurrentHashMap<>();
 
     public DockerComposeDTO start(String composeFilePath) {
         String id = UUID.randomUUID().toString();
-        String command = "docker compose -f " + composeFilePath + " up -d";
+        String command = "docker compose -f " + composeFilePath + " up"; // Removed -d flag
 
-        if (executeCommand(command)) {
+        Process process = executeCommand(command);
+        if (process != null) {
             DockerComposeDTO composeDTO = new DockerComposeDTO(id, composeFilePath, Status.RUNNING);
             runningComposes.put(id, composeDTO);
+            processMap.put(id, process);
             return composeDTO;
         }
         throw new RuntimeException("Failed to start Docker Compose for file: " + composeFilePath);
@@ -25,11 +30,14 @@ public class DockerComposeService {
 
     public boolean stop(String id) {
         DockerComposeDTO composeDTO = runningComposes.get(id);
-        if (composeDTO != null) {
+        Process process = processMap.get(id);
+        if (composeDTO != null && process != null) {
             String command = "docker compose -f " + composeDTO.getPath() + " down";
-            if (executeCommand(command)) {
+            if (executeCommand(command) != null) {
                 composeDTO.setStatus(Status.STOPPED);
                 runningComposes.remove(id);
+                process.destroy();
+                processMap.remove(id);
                 return true;
             }
         }
@@ -44,14 +52,21 @@ public class DockerComposeService {
         return runningComposes.getOrDefault(id, new DockerComposeDTO(id, "N/A", Status.UNKNOWN));
     }
 
-    private boolean executeCommand(String command) {
+    public BufferedReader getProcessOutput(String id) {
+        Process process = processMap.get(id);
+        if (process != null) {
+            return new BufferedReader(new InputStreamReader(process.getInputStream()));
+        }
+        throw new IllegalArgumentException("No process found for ID: " + id);
+    }
+
+    private Process executeCommand(String command) {
         try {
             Process process = Runtime.getRuntime().exec(command);
-            process.waitFor();
-            return process.exitValue() == 0;
+            return process;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 }
