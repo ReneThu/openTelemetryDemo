@@ -6,6 +6,7 @@ import org.ops.engine.entity.DockerComposeDTO;
 import org.ops.engine.entity.Status;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,15 +30,17 @@ public class DockerComposeService {
         return new DockerComposeDTO(id, composeFilePath, Status.CREATED);
     }
 
-    public DockerComposeDTO start(String id) {
+    public DockerComposeDTO start(String id) throws IOException {
         String composeFilePath = composeFilePaths.get(id);
         if (composeFilePath == null) {
             throw new RuntimeException("No Docker Compose file path found for ID: " + id);
         }
 
-        String command = "docker compose -f " + composeFilePath + " up";
+        String[] command = { "script", "-q", "-c", "docker compose -f " + composeFilePath + " up", "/dev/null" };
+        ProcessBuilder processBuilder = new ProcessBuilder(command);
+        Process process = processBuilder.start();
 
-        Process process = executeCommand(command);
+
         if (process != null) {
             DockerComposeDTO composeDTO = new DockerComposeDTO(id, composeFilePath, Status.RUNNING);
             runningComposes.put(id, composeDTO);

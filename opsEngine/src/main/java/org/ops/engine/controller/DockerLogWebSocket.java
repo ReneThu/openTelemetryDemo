@@ -40,7 +40,15 @@ public class DockerLogWebSocket {
                 }
 
                 String line;
+
+
                 while ((line = reader.readLine()) != null) {
+                    if (line.contains("Enable Watc")) {
+                        int i = 0;
+                        i++;
+                    }
+
+                    line = line.replace("␛[0G␛7␛8␛[0G␛7␛[-9223372036854775808;0H␛[2K␛[1;38;2;0;0;0;48;2;255;255;255mw␛[0m␛[2m Enable Watch␛[0m␛[0G␛8␛[0G␛7␛8␛", "");
                     session.sendSync(line);
                 }
             } catch (IOException | InterruptedException e) {

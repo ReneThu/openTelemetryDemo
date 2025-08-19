@@ -7,6 +7,7 @@ import org.ops.engine.entity.DockerComposeDTO;
 import org.ops.engine.requests.DockerComposeStartRequest;
 import org.ops.engine.services.DockerComposeService;
 
+import java.io.IOException;
 import java.util.List;
 
 @SerdeImport(DockerComposeStartRequest.class)
@@ -25,7 +26,7 @@ public class DockerComposeController {
     }
 
     @Post("/start/{id}")
-    public DockerComposeDTO start(@PathVariable String id) {
+    public DockerComposeDTO start(@PathVariable String id) throws IOException {
         return dockerComposeService.start(id);
     }
 
