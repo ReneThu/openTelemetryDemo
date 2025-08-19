@@ -25,25 +25,33 @@ public class DockerLogWebSocket {
 
     @OnOpen
     public void onOpen(String id, WebSocketSession session) {
-        try {
-            BufferedReader reader = dockerComposeService.getProcessOutput(id);
-            new Thread(() -> {
-                try {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        session.sendSync(line);
+        new Thread(() -> {
+            try {
+                BufferedReader reader;
+                synchronized (dockerComposeService) { //TODO this is shit remove that
+                    while (true) {
+                        try {
+                            reader = dockerComposeService.getProcessOutput(id);
+                            break; // Exit loop once process is available
+                        } catch (IllegalArgumentException e) {
+                            dockerComposeService.wait(); // Wait until notified
+                        }
                     }
-                } catch (IOException e) {
-                    session.sendSync("Error reading logs: " + e.getMessage());
-                } finally {
-                    session.close();
                 }
-            }).start();
-        } catch (IllegalArgumentException e) {
-            session.sendSync("Error: " + e.getMessage());
-            session.close();
-        }
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    session.sendSync(line);
+                }
+            } catch (IOException | InterruptedException e) {
+                session.sendSync("Error: " + e.getMessage());
+                Thread.currentThread().interrupt(); // Restore interrupt status
+            } finally {
+                session.close();
+            }
+        }).start();
     }
+
 
     @OnMessage
     public void onMessage(String message, WebSocketSession session) {

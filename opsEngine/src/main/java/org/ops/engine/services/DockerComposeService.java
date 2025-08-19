@@ -1,5 +1,6 @@
 package org.ops.engine.services;
 
+import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.ops.engine.entity.DockerComposeDTO;
 import org.ops.engine.entity.Status;
@@ -8,12 +9,19 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 @Singleton
 public class DockerComposeService {
-    private final Map<String, DockerComposeDTO> runningComposes = new ConcurrentHashMap<>();
+    private final Map<String, DockerComposeDTO> runningComposes = new ConcurrentHashMap<>(); //TODO those three maps are shit remove them
     private final Map<String, Process> processMap = new ConcurrentHashMap<>();
     private final Map<String, String> composeFilePaths = new ConcurrentHashMap<>();
+    private final ExecutorService executorService;
+
+    public DockerComposeService(@Named("io") ExecutorService executorService) {
+        this.executorService = executorService;
+    }
 
     public DockerComposeDTO create(String composeFilePath) {
         String id = UUID.randomUUID().toString();
@@ -27,17 +35,21 @@ public class DockerComposeService {
             throw new RuntimeException("No Docker Compose file path found for ID: " + id);
         }
 
-        String command = "docker compose -f " + composeFilePath + " up"; // Removed -d flag
+        String command = "docker compose -f " + composeFilePath + " up";
 
         Process process = executeCommand(command);
         if (process != null) {
             DockerComposeDTO composeDTO = new DockerComposeDTO(id, composeFilePath, Status.RUNNING);
             runningComposes.put(id, composeDTO);
-            processMap.put(id, process);
+            synchronized (this) {
+                processMap.put(id, process);
+                notifyAll(); // TODO remove this if there is time
+            }
             return composeDTO;
         }
         throw new RuntimeException("Failed to start Docker Compose for file: " + composeFilePath);
     }
+
 
     public boolean stop(String id) {
         DockerComposeDTO composeDTO = runningComposes.get(id);
@@ -45,10 +57,24 @@ public class DockerComposeService {
         if (composeDTO != null && process != null) {
             String command = "docker compose -f " + composeDTO.getPath() + " down";
             if (executeCommand(command) != null) {
-                composeDTO.setStatus(Status.STOPPED);
-                runningComposes.remove(id);
-                process.destroy();
-                processMap.remove(id);
+                executorService.submit(() -> {
+                    try {
+                        boolean finished = process.waitFor(15, TimeUnit.SECONDS);
+                        if (finished) {
+                            composeDTO.setStatus(Status.STOPPED);
+                            runningComposes.remove(id);
+                            processMap.remove(id);
+                            return true;
+                        } else {
+                            process.destroy();
+                            processMap.remove(id);
+                            throw new RuntimeException("Process did not terminate within 15 seconds.");
+                        }
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        throw new RuntimeException("Process termination was interrupted.", e);
+                    }
+                });
                 return true;
             }
         }
