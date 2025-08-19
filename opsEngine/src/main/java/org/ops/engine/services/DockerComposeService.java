@@ -13,9 +13,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DockerComposeService {
     private final Map<String, DockerComposeDTO> runningComposes = new ConcurrentHashMap<>();
     private final Map<String, Process> processMap = new ConcurrentHashMap<>();
+    private final Map<String, String> composeFilePaths = new ConcurrentHashMap<>();
 
-    public DockerComposeDTO start(String composeFilePath) {
+    public DockerComposeDTO create(String composeFilePath) {
         String id = UUID.randomUUID().toString();
+        composeFilePaths.put(id, composeFilePath);
+        return new DockerComposeDTO(id, composeFilePath, Status.CREATED);
+    }
+
+    public DockerComposeDTO start(String id) {
+        String composeFilePath = composeFilePaths.get(id);
+        if (composeFilePath == null) {
+            throw new RuntimeException("No Docker Compose file path found for ID: " + id);
+        }
+
         String command = "docker compose -f " + composeFilePath + " up"; // Removed -d flag
 
         Process process = executeCommand(command);
@@ -52,14 +63,6 @@ public class DockerComposeService {
         return runningComposes.getOrDefault(id, new DockerComposeDTO(id, "N/A", Status.UNKNOWN));
     }
 
-    public BufferedReader getProcessOutput(String id) {
-        Process process = processMap.get(id);
-        if (process != null) {
-            return new BufferedReader(new InputStreamReader(process.getInputStream()));
-        }
-        throw new IllegalArgumentException("No process found for ID: " + id);
-    }
-
     private Process executeCommand(String command) {
         try {
             Process process = Runtime.getRuntime().exec(command);
@@ -68,5 +71,13 @@ public class DockerComposeService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public BufferedReader getProcessOutput(String id) {
+        Process process = processMap.get(id);
+        if (process != null) {
+            return new BufferedReader(new InputStreamReader(process.getInputStream()));
+        }
+        throw new IllegalArgumentException("No process found for ID: " + id);
     }
 }

@@ -23,7 +23,6 @@ public class DockerLogWebSocket {
         this.broadcaster = broadcaster;
     }
 
-    // Triggered when a WebSocket connection is opened
     @OnOpen
     public void onOpen(String id, WebSocketSession session) {
         try {
@@ -32,12 +31,12 @@ public class DockerLogWebSocket {
                 try {
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        session.sendSync(line); // Send each log line to the client
+                        session.sendSync(line);
                     }
                 } catch (IOException e) {
                     session.sendSync("Error reading logs: " + e.getMessage());
                 } finally {
-                    session.close(); // Close session when done
+                    session.close();
                 }
             }).start();
         } catch (IllegalArgumentException e) {
@@ -46,9 +45,7 @@ public class DockerLogWebSocket {
         }
     }
 
-    // Required by Micronaut to handle incoming messages (even if unused)
     @OnMessage
     public void onMessage(String message, WebSocketSession session) {
-        // No-op: This method is required by Micronaut but can remain empty if not used
     }
 }

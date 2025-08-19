@@ -8,5 +8,6 @@ import io.micronaut.serde.annotation.SerdeImport;
 public enum Status {
     RUNNING,
     STOPPED,
-    UNKNOWN
+    UNKNOWN,
+    CREATED
 }

@@ -19,9 +19,14 @@ public class DockerComposeController {
         this.dockerComposeService = dockerComposeService;
     }
 
-    @Post("/start")
-    public DockerComposeDTO start(@Body DockerComposeStartRequest request) {
-        return dockerComposeService.start(request.getPath());
+    @Post("/create")
+    public DockerComposeDTO create(@Body DockerComposeStartRequest request) {
+        return dockerComposeService.create(request.getPath());
+    }
+
+    @Post("/start/{id}")
+    public DockerComposeDTO start(@PathVariable String id) {
+        return dockerComposeService.start(id);
     }
 
     @Post("/stop/{id}")
