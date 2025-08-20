@@ -106,5 +106,13 @@ layout: iframe
 url: ./htmldocs/first-diagram.html
 ---
 
+---
+layout: iframe
+url: http://localhost:8080
+---
 
+---
+layout: iframe
+url: ./htmldocs/docker-compose-overview.html
+---
 
