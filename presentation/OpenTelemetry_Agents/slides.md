@@ -65,10 +65,46 @@ layout: center
 transition: slide-up
 ---
 
-# Start Deployment
+```mermaid
+flowchart TB
+    %% Define subgraphs for logical grouping
+    subgraph Core_Services
+        mainService["🖥️ **mainService** (8080)"]
+        guestBookService["🖥️ **guestBookService** (8081)"]
+        dataBaseService["🖥️ **dataBaseService** (8082)"]
+    end
 
-### Start the deployment
+    subgraph Database
+        mysql["🛢️ **MySQL** (3306)"]
+    end
 
-<button @click="runCommand('./start.sh no-tracing')">Start Without Tracing</button>
-<button @click="runCommand('./start.sh with-tracing')">Start With Tracing</button>
+    subgraph Messaging
+        rabbitmq["📨 **RabbitMQ** (5672)"]
+    end
+
+    subgraph Communication
+        emailservice["📧 **emailService** (8083)"]
+    end
+
+    %% Define connections
+    mainService -->|Depends On| guestBookService
+    mainService -->|Depends On| dataBaseService
+    guestBookService -->|Depends On| dataBaseService
+    dataBaseService -->|Uses| mysql
+    mainService -->|Sends Messages To| rabbitmq
+    rabbitmq -->|Sends Messages To| emailservice
+
+    %% Styling for larger elements and spacing
+    classDef largeNode font-size:32px, font-weight:bold, fill:#f0f0f0, stroke:#333, stroke-width:2px;
+    classDef largeEdge stroke-width:2px, stroke:#333;
+
+    class mainService,guestBookService,dataBaseService,mysql,rabbitmq,emailservice largeNode;
+```
+
+---
+layout: iframe
+url: ./htmldocs/first-diagram.html
+---
+
+
 

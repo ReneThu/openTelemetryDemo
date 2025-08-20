@@ -4,17 +4,19 @@
     <title>Docker Logs</title>
     <style>
         body {
-            font-family: monospace;
+            font-family: "Courier", "Consolas", monospace;
             background-color: #000;
-            color: #fff; /* Default color for text */
+            color: #fff;
             margin: 0;
             padding: 0;
         }
         #log-container {
-            padding: 10px;
+            padding: 20px; /* Add some padding for better spacing */
             white-space: pre-wrap;
             overflow-y: auto;
             height: 100vh;
+            font-size: 18px; /* Larger font size for readability */
+            line-height: 1.6; /* Increased line spacing */
         }
     </style>
     <!-- Include ansi_up via CDN -->
@@ -31,13 +33,9 @@
 
     function renderLogLine(data) {
         try {
-            console.log('Raw data received:', data);
-
             let sanitizedData = data.replace(/[^ -~\u001b\u0009\u000a\u000d]/g, '');
 
             sanitizedData = sanitizedData.replace(/\x1b\[.*?Hw Enable Watch\x1b\[.*?m/g, '');
-
-            console.log('Sanitized data:', sanitizedData);
 
             return ansi_up.ansi_to_html(sanitizedData);
         } catch (error) {
@@ -46,15 +44,22 @@
         }
     }
 
-
-    // Handle incoming WebSocket messages
     socket.onmessage = (event) => {
         const logLine = document.createElement('div');
-        // Convert sanitized ANSI escape codes to HTML
-        logLine.innerHTML = renderLogLine(event.data);
+
+        let renderedLogLine = renderLogLine(event.data);
+
+        renderedLogLine = renderedLogLine.replace(
+            /787\[-9223372036854775808;0H<span style="font-weight:bold;color:rgb\(0,0,0\);background-color:rgb\(255,255,255\)">w<\/span> Enable Watch878/g,
+            ''
+        );
+
+        logLine.innerHTML = renderedLogLine;
+
         logContainer.appendChild(logLine);
         logContainer.scrollTop = logContainer.scrollHeight; // Auto-scroll to the latest log
     };
+
 
     // Handle WebSocket errors
     socket.onerror = (error) => {
