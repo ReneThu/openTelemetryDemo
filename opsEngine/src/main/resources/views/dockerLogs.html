@@ -4,19 +4,20 @@
     <title>Docker Logs</title>
     <style>
         body {
-            font-family: "Courier", "Consolas", monospace;
-            background-color: #000;
-            color: #fff;
-            margin: 0;
-            padding: 0;
+           font-family: "Courier", "Consolas", monospace;
+           background-color: #000;
+           color: #fff;
+           margin: 0;
+           padding: 0;
         }
         #log-container {
-            padding: 20px; /* Add some padding for better spacing */
-            white-space: pre-wrap;
-            overflow-y: auto;
-            height: 100vh;
-            font-size: 18px; /* Larger font size for readability */
-            line-height: 1.6; /* Increased line spacing */
+           padding: 20px; /* Add some padding for better spacing */
+           white-space: pre-wrap; /* Preserve line breaks and spaces */
+           overflow: hidden; /* Remove scrollbars and cut off overflowing text */
+           height: 100vh; /* Full viewport height */
+           font-size: 18px; /* Larger font size for readability */
+           line-height: 1.6; /* Increased line spacing */
+           text-overflow: clip; /* Cut off overflowing text without ellipsis */
         }
     </style>
     <!-- Include ansi_up via CDN -->
@@ -26,53 +27,56 @@
 <div id="log-container"></div>
 <script>
     // Access ansi_up from the global window object
-    const ansi_up = new AnsiUp();
+   const ansi_up = new AnsiUp();
 
-    const logContainer = document.getElementById('log-container');
-    const socket = new WebSocket(`ws://${window.location.host}/docker/logs/${window.location.pathname.split('/').pop()}`);
+   const logContainer = document.getElementById('log-container');
+   const socket = new WebSocket(`ws://${window.location.host}/docker/logs/${window.location.pathname.split('/').pop()}`);
 
-    function renderLogLine(data) {
-        try {
-            let sanitizedData = data.replace(/[^ -~\u001b\u0009\u000a\u000d]/g, '');
+   function renderLogLine(data) {
+       try {
+           let sanitizedData = data.replace(/[^ -~\u001b\u0009\u000a\u000d]/g, '');
 
-            sanitizedData = sanitizedData.replace(/\x1b\[.*?Hw Enable Watch\x1b\[.*?m/g, '');
+           sanitizedData = sanitizedData.replace(/\x1b\[.*?Hw Enable Watch\x1b\[.*?m/g, '');
 
-            return ansi_up.ansi_to_html(sanitizedData);
-        } catch (error) {
-            console.error('Error rendering log line:', error, 'Input:', data);
-            return `<span style="color: red;">Error rendering log line: ${error.message}</span>`;
-        }
-    }
+           return ansi_up.ansi_to_html(sanitizedData);
+       } catch (error) {
+           console.error('Error rendering log line:', error, 'Input:', data);
+           return `<span style="color: red;">Error rendering log line: ${error.message}</span>`;
+       }
+   }
 
-    socket.onmessage = (event) => {
-        const logLine = document.createElement('div');
+   socket.onmessage = (event) => {
+       const logLine = document.createElement('div');
 
-        let renderedLogLine = renderLogLine(event.data);
+       let renderedLogLine = renderLogLine(event.data);
 
-        renderedLogLine = renderedLogLine.replace(
-            /787\[-9223372036854775808;0H<span style="font-weight:bold;color:rgb\(0,0,0\);background-color:rgb\(255,255,255\)">w<\/span> Enable Watch878/g,
-            ''
-        );
+       renderedLogLine = renderedLogLine.replace(
+           /787\[-9223372036854775808;0H<span style="font-weight:bold;color:rgb\(0,0,0\);background-color:rgb\(255,255,255\)">w<\/span> Enable Watch878/g,
+           ''
+       );
 
-        logLine.innerHTML = renderedLogLine;
+       logLine.innerHTML = renderedLogLine;
 
-        logContainer.appendChild(logLine);
-        logContainer.scrollTop = logContainer.scrollHeight; // Auto-scroll to the latest log
-    };
+       logContainer.appendChild(logLine);
 
+       // Limit the number of lines to fit the container height
+       while (logContainer.scrollHeight > logContainer.clientHeight) {
+           logContainer.removeChild(logContainer.firstChild);
+       }
+   };
 
-    // Handle WebSocket errors
-    socket.onerror = (error) => {
-        console.error('WebSocket error:', error);
-    };
+   // Handle WebSocket errors
+   socket.onerror = (error) => {
+       console.error('WebSocket error:', error);
+   };
 
-    // Handle WebSocket closure
-    socket.onclose = () => {
-        const closedMessage = document.createElement('div');
-        closedMessage.textContent = 'Connection closed.';
-        closedMessage.style.color = 'red';
-        logContainer.appendChild(closedMessage);
-    };
+   // Handle WebSocket closure
+   socket.onclose = () => {
+       const closedMessage = document.createElement('div');
+       closedMessage.textContent = 'Connection closed.';
+       closedMessage.style.color = 'red';
+       logContainer.appendChild(closedMessage);
+   };
 </script>
 </body>
 </html>

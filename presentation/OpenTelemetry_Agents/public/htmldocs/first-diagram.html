@@ -6,110 +6,86 @@
     <title>Docker Manager</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #121212; /* Very dark gray background */
-            color: #ffffff; /* White text for contrast */
-        }
-        #docker-instances {
-            flex: 1;
-            display: flex;
-            flex-wrap: wrap;
-            background-color: #1e1e1e; /* Dark gray for the top section */
-            padding: 10px;
-            overflow-y: auto;
-        }
-        .docker-box {
-            background-color: #2a2a2a; /* Darker gray for boxes */
-            border: 1px solid #444; /* Subtle border */
-            padding: 10px;
-            margin: 5px;
-            flex: 1 1 calc(33.333% - 20px);
-            box-sizing: border-box;
-            text-align: center;
-            color: #ffffff; /* White text for readability */
-        }
-        iframe {
-            width: 100%;
-            height: 50%;
-            border: none;
-            background-color: #1e1e1e; /* Matches the dark theme */
+           font-family: Arial, sans-serif;
+           margin: 0;
+           padding: 0;
+           display: flex;
+           flex-direction: column;
+           height: 100vh;
+           background-color: #121212; /* Very dark gray background */
+           color: #ffffff; /* White text for contrast */
         }
         #controls {
-            display: flex;
-            justify-content: space-around;
-            padding: 10px;
-            background-color: #1e1e1e; /* Dark gray for the controls section */
-            border-top: 1px solid #444; /* Subtle border for separation */
+           display: flex;
+           justify-content: space-around;
+           padding: 15px;
+           background-color: #1e1e1e; /* Dark gray for the controls section */
+           border-bottom: 1px solid #444; /* Subtle border for separation */
+           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Modern shadow effect */
+           z-index: 1;
         }
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #333; /* Dark gray for buttons */
-            color: #ffffff; /* White text on buttons */
-            border: 1px solid #444; /* Subtle border */
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+           padding: 10px 20px;
+           font-size: 16px;
+           cursor: pointer;
+           background-color: #333; /* Dark gray for buttons */
+           color: #ffffff; /* White text on buttons */
+           border: 1px solid #444; /* Subtle border */
+           border-radius: 5px;
+           transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
         }
         button:hover {
-            background-color: #444; /* Slightly lighter on hover */
+           background-color: #444; /* Slightly lighter on hover */
+           transform: scale(1.05); /* Slight zoom effect */
+        }
+        iframe {
+           flex: 1;
+           width: 100%;
+           border: none;
+           background-color: #1e1e1e; /* Matches the dark theme */
+           overflow: hidden; /* Prevent scrollbars */
         }
     </style>
     <script>
         let dockerId = null;
 
         async function createDocker() {
-            const response = await fetch('http://localhost:3030/docker-compose/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ path: '/home/marco/Documents/Development/techEvangelistGeneric/otelDemo/docker-compose.yaml' })
-            });
-            const data = await response.json();
-            dockerId = data.id;
+           const response = await fetch('http://localhost:3030/docker-compose/create', {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ path: '/home/marco/Documents/Development/techEvangelistGeneric/otelDemo/docker-compose.yaml' })
+           });
+           const data = await response.json();
+           dockerId = data.id;
 
-            // Add a new box to the top section
-            const dockerInstances = document.getElementById('docker-instances');
-            const dockerBox = document.createElement('div');
-            dockerBox.className = 'docker-box';
-            dockerBox.textContent = `Docker ID: ${dockerId}`;
-            dockerInstances.appendChild(dockerBox);
-
-            // Load the watch endpoint in the iframe
-            const iframe = document.getElementById('docker-watch');
-            iframe.src = `http://localhost:3030/docker/watch/${dockerId}`;
+           // Load the watch endpoint in the iframe
+           const iframe = document.getElementById('docker-watch');
+           iframe.src = `http://localhost:3030/docker/watch/${dockerId}`;
         }
 
         async function startDocker() {
-            if (!dockerId) {
-                alert('Please create a Docker instance first.');
-                return;
-            }
-            await fetch(`http://localhost:3030/docker-compose/start/${dockerId}`, { method: 'POST' });
-            alert('Docker started!');
+           if (!dockerId) {
+               alert('Please create a Docker instance first.');
+               return;
+           }
+           await fetch(`http://localhost:3030/docker-compose/start/${dockerId}`, { method: 'POST' });
         }
 
         async function stopDocker() {
-            if (!dockerId) {
-                alert('Please create a Docker instance first.');
-                return;
-            }
-            await fetch(`http://localhost:3030/docker-compose/stop/${dockerId}`, { method: 'POST' });
-            alert('Docker stopped!');
+           if (!dockerId) {
+               alert('Please create a Docker instance first.');
+               return;
+           }
+           await fetch(`http://localhost:3030/docker-compose/stop/${dockerId}`, { method: 'POST' });
         }
     </script>
 </head>
 <body>
-<div id="docker-instances">
-    <!-- Docker instances will appear here -->
-</div>
-<iframe id="docker-watch" src=""></iframe>
 <div id="controls">
     <button onclick="createDocker()">Docker Up</button>
     <button onclick="startDocker()">Start Docker</button>
     <button onclick="stopDocker()">Stop Docker</button>
 </div>
+<iframe id="docker-watch" src="" scrolling="no"></iframe>
+</body>
+</html>
