@@ -3,6 +3,7 @@ package org.ops.engine.controller;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
 import io.micronaut.serde.annotation.SerdeImport;
+import org.ops.engine.entity.ContainerHealthStatus;
 import org.ops.engine.entity.DockerComposeDTO;
 import org.ops.engine.requests.DockerComposeStartRequest;
 import org.ops.engine.services.DockerComposeService;
@@ -48,5 +49,18 @@ public class DockerComposeController {
             throw new RuntimeException("Docker Compose instance not found for ID: " + id);
         }
         return composeDTO;
+    }
+
+    @Get("/{id}/ps/list")
+    public List<ContainerHealthStatus> listContainerHealth(@PathVariable String id) throws Exception {
+        return dockerComposeService.getContainerHealthList(id);
+    }
+
+    @Get("/{id}/ps/{containerName}")
+    public ContainerHealthStatus getContainerHealth(
+            @PathVariable String id,
+            @PathVariable String containerName
+    ) throws Exception {
+        return dockerComposeService.getContainerHealth(id, containerName);
     }
 }

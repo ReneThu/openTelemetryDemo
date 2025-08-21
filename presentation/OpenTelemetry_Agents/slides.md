@@ -106,10 +106,7 @@ layout: iframe
 url: ./htmldocs/first-diagram.html
 ---
 
----
-layout: full
----
-<LazyIframe url="http://localhost:8080" />
+
 
 ---
 layout: iframe

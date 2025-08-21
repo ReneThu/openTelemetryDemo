@@ -3,12 +3,15 @@ package org.ops.engine.entity;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.SerdeImport;
 
+import java.util.List;
+
 @SerdeImport
 @Introspected
 public class DockerComposeDTO {
     private String id;
     private String path;
     private Status status;
+    private List<ContainerHealthStatus> containerHealthStatuses;
 
     public DockerComposeDTO(String id, String path, Status status) {
         this.id = id;
@@ -38,5 +41,13 @@ public class DockerComposeDTO {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public List<ContainerHealthStatus> getContainerHealthStatuses() {
+        return containerHealthStatuses;
+    }
+
+    public void setContainerHealthStatuses(List<ContainerHealthStatus> containerHealthStatuses) {
+        this.containerHealthStatuses = containerHealthStatuses;
     }
 }

@@ -1,7 +1,10 @@
 package org.ops.engine.services;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
+import org.ops.engine.entity.ContainerHealthStatus;
 import org.ops.engine.entity.DockerComposeDTO;
 import org.ops.engine.entity.Status;
 
@@ -19,6 +22,7 @@ public class DockerComposeService {
     private final Map<String, Process> processMap = new ConcurrentHashMap<>();
     private final Map<String, String> composeFilePaths = new ConcurrentHashMap<>();
     private final ExecutorService executorService;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public DockerComposeService(@Named("io") ExecutorService executorService) {
         this.executorService = executorService;
@@ -108,5 +112,46 @@ public class DockerComposeService {
             return new BufferedReader(new InputStreamReader(process.getInputStream()));
         }
         throw new IllegalArgumentException("No process found for ID: " + id);
+    }
+
+
+    public List<ContainerHealthStatus> getContainerHealthList(String id) throws Exception {
+        DockerComposeDTO composeDTO = runningComposes.get(id);
+        if (composeDTO == null) {
+            throw new RuntimeException("No Docker Compose instance found for ID: " + id);
+        }
+
+        String command = "docker compose -f " + composeDTO.getPath() + " ps --format json";
+        Process process = Runtime.getRuntime().exec(command);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+        StringBuilder jsonOutput = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonOutput.append(line);
+        }
+        process.waitFor();
+
+        // Parse the JSON output
+        JsonNode rootNode = objectMapper.readTree(jsonOutput.toString());
+        List<ContainerHealthStatus> healthStatuses = new ArrayList<>();
+
+        for (JsonNode node : rootNode) {
+            String containerName = node.get("Name").asText();
+            String status = node.has("Health") ? node.get("Health").asText() : "unknown";
+            String ports = node.has("Ports") ? node.get("Ports").asText() : "";
+
+            healthStatuses.add(new ContainerHealthStatus(containerName, status, ports));
+        }
+
+        return healthStatuses;
+    }
+
+    public ContainerHealthStatus getContainerHealth(String id, String containerName) throws Exception {
+        List<ContainerHealthStatus> healthStatuses = getContainerHealthList(id);
+        return healthStatuses.stream()
+                .filter(status -> status.getContainerName().equals(containerName))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Container not found: " + containerName));
     }
 }
