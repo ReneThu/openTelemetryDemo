@@ -1,82 +1,102 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Docker Logs</title>
+    <meta charset="UTF-8">
+    <title>Graphic Design</title>
+    <link href="https://fonts.cdnfonts.com/css/comic-sans-ms" rel="stylesheet" />
     <style>
-        body {
-           font-family: "Courier", "Consolas", monospace;
-           background-color: #000;
-           color: #fff;
-           margin: 0;
-           padding: 0;
+        /* Ensure the full page is utilized */
+        html, body {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          overflow: hidden; /* Prevent scrolling */
         }
-        #log-container {
-           padding: 20px; /* Add some padding for better spacing */
-           white-space: pre-wrap; /* Preserve line breaks and spaces */
-           overflow: hidden; /* Remove scrollbars and cut off overflowing text */
-           height: 100vh; /* Full viewport height */
-           font-size: 18px; /* Larger font size for readability */
-           line-height: 1.6; /* Increased line spacing */
-           text-overflow: clip; /* Cut off overflowing text without ellipsis */
+
+        body {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          font-family: 'Comic Sans MS', sans-serif;
+          background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet, red);
+          background-size: 1600% 1600%;
+          animation: moveBackground 10s linear infinite;
+          font-size: 2.5em; /* Adjust font size for readability */
+          gap: 20px; /* Add spacing between elements */
+        }
+
+        @keyframes moveBackground {
+          0% {
+            background-position: 0% 50%;
+          }
+          100% {
+            background-position: 100% 50%;
+          }
+        }
+
+        .rainbow-text {
+          display: inline-flex;
+          flex-wrap: wrap;
+          gap: 0;
+          text-align: center;
+        }
+
+        .rainbow-text span {
+          text-shadow: 2px 2px 4px black;
+          line-height: 1;
+        }
+
+        img {
+          width: 300px; /* Smaller image to save space */
+        }
+
+        /* Fullscreen iframe container */
+        .iframe-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%; /* Take full width of the viewport */
+          height: 100%; /* Take full height of the viewport */
+        }
+
+        iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
         }
     </style>
-    <!-- Include ansi_up via CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.0.0/ansi_up.min.js"></script>
 </head>
 <body>
-<div id="log-container"></div>
-<script>
-    // Access ansi_up from the global window object
-   const ansi_up = new AnsiUp();
+<div class="rainbow-text">
+    <span style="color: red;">F</span>
+    <span style="color: orange;">r</span>
+    <span style="color: yellow;">o</span>
+    <span style="color: green;">n</span>
+    <span style="color: blue;">t</span>
+    <span style="color: indigo;">e</span>
+    <span style="color: violet;">n</span>
+    <span style="color: red;">d</span>
+    <span style="color: orange;">&nbsp;</span>
+    <span style="color: yellow;">i</span>
+    <span style="color: green;">s</span>
+    <span style="color: blue;">&nbsp;</span>
+    <span style="color: indigo;">m</span>
+    <span style="color: violet;">y</span>
+    <span style="color: red;">&nbsp;</span>
+    <span style="color: orange;">p</span>
+    <span style="color: yellow;">a</span>
+    <span style="color: green;">s</span>
+    <span style="color: blue;">s</span>
+    <span style="color: indigo;">i</span>
+    <span style="color: violet;">o</span>
+    <span style="color: red;">n</span>
+</div>
+<img src="https://i.pinimg.com/1200x/04/ca/26/04ca26a4ced5276563dec21a6d82573a.jpg" alt="My Picture">
 
-   const logContainer = document.getElementById('log-container');
-   const socket = new WebSocket(`ws://${window.location.host}/docker/logs/${window.location.pathname.split('/').pop()}`);
-
-   function renderLogLine(data) {
-       try {
-           let sanitizedData = data.replace(/[^ -~\u001b\u0009\u000a\u000d]/g, '');
-
-           sanitizedData = sanitizedData.replace(/\x1b\[.*?Hw Enable Watch\x1b\[.*?m/g, '');
-
-           return ansi_up.ansi_to_html(sanitizedData);
-       } catch (error) {
-           console.error('Error rendering log line:', error, 'Input:', data);
-           return `<span style="color: red;">Error rendering log line: ${error.message}</span>`;
-       }
-   }
-
-   socket.onmessage = (event) => {
-       const logLine = document.createElement('div');
-
-       let renderedLogLine = renderLogLine(event.data);
-
-       renderedLogLine = renderedLogLine.replace(
-           /787\[-9223372036854775808;0H<span style="font-weight:bold;color:rgb\(0,0,0\);background-color:rgb\(255,255,255\)">w<\/span> Enable Watch878/g,
-           ''
-       );
-
-       logLine.innerHTML = renderedLogLine;
-
-       logContainer.appendChild(logLine);
-
-       // Limit the number of lines to fit the container height
-       while (logContainer.scrollHeight > logContainer.clientHeight) {
-           logContainer.removeChild(logContainer.firstChild);
-       }
-   };
-
-   // Handle WebSocket errors
-   socket.onerror = (error) => {
-       console.error('WebSocket error:', error);
-   };
-
-   // Handle WebSocket closure
-   socket.onclose = () => {
-       const closedMessage = document.createElement('div');
-       closedMessage.textContent = 'Connection closed.';
-       closedMessage.style.color = 'red';
-       logContainer.appendChild(closedMessage);
-   };
-</script>
+<!-- Fullscreen iframe -->
+<div class="iframe-container">
+    <iframe src="http://localhost:8080/guestbook" title="Guestbook"></iframe>
+</div>
 </body>
 </html>

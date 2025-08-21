@@ -16,7 +16,11 @@ services:
     environment:
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
-    ##TODO add healthcheck
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
 
   guestBookService:
     image: guestbookservice:latest

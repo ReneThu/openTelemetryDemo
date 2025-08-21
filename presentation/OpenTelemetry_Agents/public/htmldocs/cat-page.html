@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slidev Fullscreen Iframe</title>
+    <style>
+        html, body {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          overflow: hidden; /* Prevent scrollbars */
+        }
+
+        iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const iframeSrc = "http://localhost:8080";
+          let retryInterval = 3000; // Retry every 3 seconds
+
+          const loadIframe = () => {
+            const iframe = document.createElement("iframe");
+            iframe.src = iframeSrc;
+            iframe.title = "Embedded Page";
+
+            // Add an error handler to detect connection issues
+            iframe.onerror = () => {
+              console.warn("Connection refused. Retrying...");
+              setTimeout(() => {
+                location.reload(); // Reload the page on connection failure
+              }, retryInterval);
+            };
+
+            // Append the iframe to the body
+            document.body.appendChild(iframe);
+          };
+
+          // Load the iframe when the page becomes visible
+          if (document.visibilityState === "visible") {
+            loadIframe();
+          } else {
+            document.addEventListener("visibilitychange", () => {
+              if (document.visibilityState === "visible") {
+                loadIframe();
+              }
+            });
+          }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>
