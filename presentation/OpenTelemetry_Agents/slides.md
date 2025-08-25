@@ -102,9 +102,9 @@ flowchart TB
 ```
 
 ---
-layout: iframe
-url: ./htmldocs/first-diagram.html
+layout: FullLessPadding
 ---
+<DockerManager dockerComposePath="/home/marco/Documents/Development/techEvangelistGeneric/otelDemo/docker-compose.yaml" />
 
 
 
@@ -112,4 +112,6 @@ url: ./htmldocs/first-diagram.html
 layout: iframe
 url: ./htmldocs/docker-compose-overview.html
 ---
+
+
 
