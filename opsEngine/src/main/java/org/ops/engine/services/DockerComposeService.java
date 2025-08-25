@@ -27,9 +27,9 @@ public class DockerComposeService {
         this.executorService = executorService;
     }
 
-    public DockerComposeDTO create(String composeFilePath) {
+    public DockerComposeDTO create(String composeFilePath, String name) {
         String id = UUID.randomUUID().toString();
-        DockerComposeDTO composeDTO = new DockerComposeDTO(id, composeFilePath, Status.CREATED);
+        DockerComposeDTO composeDTO = new DockerComposeDTO(id, composeFilePath, Status.CREATED, name);
         dockerComposeInstances.put(id, new DockerComposeInstance(composeDTO, null, composeFilePath));
         return composeDTO;
     }
@@ -50,6 +50,9 @@ public class DockerComposeService {
             DockerComposeDTO composeDTO = instance.getComposeDTO();
             composeDTO.setStatus(Status.RUNNING);
             instance.setProcess(process);
+            synchronized (this) {
+                notifyAll(); // TODO remove this if there is time
+            }
             return composeDTO;
         }
 
@@ -101,7 +104,7 @@ public class DockerComposeService {
         if (instance != null) {
             return instance.getComposeDTO();
         }
-        return new DockerComposeDTO(id, "N/A", Status.UNKNOWN);
+        return new DockerComposeDTO(id, "N/A", Status.UNKNOWN, "N/A");
     }
 
 

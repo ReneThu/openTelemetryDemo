@@ -11,12 +11,14 @@ public class DockerComposeDTO {
     private String id;
     private String path;
     private Status status;
+    private String name;
     private List<ContainerHealthStatus> containerHealthStatuses;
 
-    public DockerComposeDTO(String id, String path, Status status) {
+    public DockerComposeDTO(String id, String path, Status status, String name) {
         this.id = id;
         this.path = path;
         this.status = status;
+        this.name = name;
     }
 
     public String getId() {

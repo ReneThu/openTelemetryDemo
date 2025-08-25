@@ -23,7 +23,7 @@ public class DockerComposeController {
 
     @Post("/create")
     public DockerComposeDTO create(@Body DockerComposeStartRequest request) {
-        return dockerComposeService.create(request.getPath());
+        return dockerComposeService.create(request.getPath(), request.getName());
     }
 
     @Post("/start/{id}")
