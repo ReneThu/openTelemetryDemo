@@ -43,3 +43,6 @@ dist
 .vite-inspect
 .remote-assets
 components.d.ts
+
+### do not commit pictures ###
+presentation/OpenTelemetry_Agents/public/pictures
