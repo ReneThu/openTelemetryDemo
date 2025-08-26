@@ -1,0 +1,125 @@
+<!-- infra-diagram.html
+     Stand-alone responsive SVG diagram of the container landscape
+     -------------------------------------------------------------
+     – Inline SVG (no external assets)
+     – Muted flat colours, subtle stroke, rounded rectangles
+     – HTTP arrows = blue, MQ arrows = orange
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Container Infrastructure Diagram</title>
+
+    <style>
+        /* Page & typography ----------------------------------------------------*/
+        body{
+          margin:0;
+          padding:0;
+          font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Helvetica,Arial,sans-serif;
+          background:#fafafa;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          min-height:100vh;
+        }
+        .diagram-wrapper{
+          width:100%;
+          max-width:1000px;
+          padding:24px;
+          box-sizing:border-box;
+        }
+
+        /* Node styling ---------------------------------------------------------*/
+        .svc rect{
+          fill:#ffffff;
+          stroke:#333;
+          stroke-width:1.5;
+          rx:8; ry:8;          /* rounded corners【2-10-2】*/
+          filter:drop-shadow(0 1px 2px rgba(0,0,0,.08));
+        }
+        .svc text{
+          fill:#333;
+          font-size:14px;
+          pointer-events:none;
+          text-anchor:middle;
+          dominant-baseline:middle;
+        }
+
+        /* Arrow styling --------------------------------------------------------*/
+        .http { stroke:#1f77b4; }   /* muted blue for HTTP */
+        .mq   { stroke:#ff7f0e; }   /* muted orange for MQ */
+        .link{
+          fill:none;
+          stroke-width:2;
+          marker-end:url(#arrow);
+        }
+    </style>
+</head>
+
+<body>
+<div class="diagram-wrapper">
+    <!-- Responsive by viewBox / 100 % width technique【2-2-0】 -->
+    <svg viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet" width="100%">
+        <!-- Arrowhead -------------------------------------------------------->
+        <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5"
+                    markerWidth="6" markerHeight="6" orient="auto"
+                    markerUnits="strokeWidth">
+                <!-- custom arrow marker【2-8-0】-->
+                <path d="M 0 0 L 10 5 L 0 10 Z" fill="inherit"/>
+            </marker>
+        </defs>
+
+        <!-- Service nodes ---------------------------------------------------->
+        <!-- Top row : HTTP chain -->
+        <g class="svc" id="mainService">
+            <rect x="50"  y="120" width="120" height="60"/>
+            <text x="110" y="150">mainService</text>
+        </g>
+
+        <g class="svc" id="guestBookService">
+            <rect x="210" y="120" width="140" height="60"/>
+            <text x="280" y="150">guestBookService</text>
+        </g>
+
+        <g class="svc" id="dataBaseService">
+            <rect x="400" y="120" width="160" height="60"/>
+            <text x="480" y="150">dataBaseService</text>
+        </g>
+
+        <g class="svc" id="mysql">
+            <rect x="610" y="120" width="120" height="60"/>
+            <text x="670" y="150">mysql</text>
+        </g>
+
+        <!-- Bottom row : MQ chain -->
+        <g class="svc" id="rabbitmq">
+            <rect x="210" y="260" width="140" height="60"/>
+            <text  x="280" y="290">rabbitmq</text>
+        </g>
+
+        <g class="svc" id="emailService">
+            <rect x="400" y="260" width="160" height="60"/>
+            <text  x="480" y="290">emailService</text>
+        </g>
+
+        <!-- Connections ------------------------------------------------------>
+        <!-- HTTP -->
+        <path class="link http"
+              d="M 170 150 L 210 150"/>          <!-- main → guestBook -->
+        <path class="link http"
+              d="M 350 150 L 400 150"/>          <!-- guestBook → dataBase -->
+        <path class="link http"
+              d="M 560 150 L 610 150"/>          <!-- dataBase → mysql -->
+
+        <!-- MQ -->
+        <path class="link mq"
+              d="M 110 180 L 110 260 L 210 290"/> <!-- main → rabbitmq -->
+        <path class="link mq"
+              d="M 350 290 L 400 290"/>           <!-- rabbitmq → email -->
+    </svg>
+</div>
+</body>
+</html>

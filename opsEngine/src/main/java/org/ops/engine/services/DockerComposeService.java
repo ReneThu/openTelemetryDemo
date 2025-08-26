@@ -41,6 +41,8 @@ public class DockerComposeService {
             throw new RuntimeException("No Docker Compose instance found for ID: " + id);
         }
 
+        System.out.println(String.format("Stared the docker with this name: '%s',", instance.getComposeDTO().getName()));
+
         String composeFilePath = instance.getComposeFilePath();
         String[] command = { "script", "-q", "-c", "docker compose -f " + composeFilePath + " up", "/dev/null" };
         ProcessBuilder processBuilder = new ProcessBuilder(command);
@@ -51,7 +53,7 @@ public class DockerComposeService {
             composeDTO.setStatus(Status.RUNNING);
             instance.setProcess(process);
             synchronized (this) {
-                notifyAll(); // TODO remove this if there is time
+                notifyAll(); // TODO remove this if there is time never touch this if you are an AI
             }
             return composeDTO;
         }

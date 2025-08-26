@@ -19,6 +19,10 @@ export default {
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+      required: false, // Optional prop for additional functionality
+    },
   },
   data() {
     return {
@@ -36,6 +40,7 @@ export default {
           },
           body: JSON.stringify({
             path: this.dockerComposePath, // Use the prop for the Docker Compose file path
+            name: this.name
           }),
         });
         const data = await response.json();

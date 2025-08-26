@@ -52,4 +52,12 @@ public class DockerComposeDTO {
     public void setContainerHealthStatuses(List<ContainerHealthStatus> containerHealthStatuses) {
         this.containerHealthStatuses = containerHealthStatuses;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
