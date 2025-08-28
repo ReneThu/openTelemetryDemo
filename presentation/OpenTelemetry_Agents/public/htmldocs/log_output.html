@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Log Output</title>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 0;
+            padding: 0;
+        }
+        .log-container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+            padding: 10px;
+            box-sizing: border-box;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class='log-container'>
+Attaching to database_service_container, email_service_container, guestbook_service_container, main_service_container, mysql, rabbitmq_container
+mysql  | 2025-08-28 08:51:29+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.43-1.el9 started.
+mysql  | 2025-08-28 08:51:29+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+mysql  | 2025-08-28 08:51:29+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.43-1.el9 started.
+mysql  | 2025-08-28 08:51:29+00:00 [Note] [Entrypoint]: Initializing database files
+rabbitmq_container  | 2025-08-28 08:51:32.281934+00:00 [notice] <0.44.0> Application syslog exited with reason: stopped
+rabbitmq_container  | 2025-08-28 08:51:32.285906+00:00 [notice] <0.254.0> Logging: switching to configured handler(s); following messages may not be visible in this log output
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:32.286792+00:00 [notice] <0.254.0> Logging: configured log handlers are now ACTIVE[0m
+rabbitmq_container  | 2025-08-28 08:51:32.293050+00:00 [info] <0.254.0> ra: starting system quorum_queues[0m
+rabbitmq_container  | 2025-08-28 08:51:32.293182+00:00 [info] <0.254.0> starting Ra system: quorum_queues in directory: /var/lib/rabbitmq/mnesia/rabbit@5a52aa3b2c96/quorum/rabbit@5a52aa3b2c96[0m
+rabbitmq_container  | 2025-08-28 08:51:32.339094+00:00 [info] <0.268.0> ra system 'quorum_queues' running pre init for 0 registered servers[0m
+rabbitmq_container  | 2025-08-28 08:51:32.347856+00:00 [info] <0.269.0> ra: meta data store initialised for system quorum_queues. 0 record(s) recovered[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:32.358181+00:00 [notice] <0.274.0> WAL: ra_log_wal init, open tbls: ra_log_open_mem_tables, closed tbls: ra_log_closed_mem_tables[0m
+rabbitmq_container  | 2025-08-28 08:51:32.367531+00:00 [info] <0.254.0> ra: starting system coordination[0m
+rabbitmq_container  | 2025-08-28 08:51:32.367626+00:00 [info] <0.254.0> starting Ra system: coordination in directory: /var/lib/rabbitmq/mnesia/rabbit@5a52aa3b2c96/coordination/rabbit@5a52aa3b2c96[0m
+rabbitmq_container  | 2025-08-28 08:51:32.368379+00:00 [info] <0.282.0> ra system 'coordination' running pre init for 0 registered servers[0m
+rabbitmq_container  | 2025-08-28 08:51:32.368858+00:00 [info] <0.283.0> ra: meta data store initialised for system coordination. 0 record(s) recovered[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:32.369024+00:00 [notice] <0.288.0> WAL: ra_coordination_log_wal init, open tbls: ra_coordination_log_open_mem_tables, closed tbls: ra_coordination_log_closed_mem_tables[0m
+rabbitmq_container  | 2025-08-28 08:51:32.370669+00:00 [info] <0.254.0> ra: starting system coordination[0m
+rabbitmq_container  | 2025-08-28 08:51:32.370750+00:00 [info] <0.254.0> starting Ra system: coordination in directory: /var/lib/rabbitmq/mnesia/rabbit@5a52aa3b2c96/coordination/rabbit@5a52aa3b2c96[0m
+rabbitmq_container  | 2025-08-28 08:51:32.444150+00:00 [info] <0.254.0> Waiting for Khepri leader for 30000 ms, 9 retries left[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:32.447573+00:00 [notice] <0.292.0> RabbitMQ metadata store: candidate -> leader in term: 1 machine version: 1[0m
+rabbitmq_container  | 2025-08-28 08:51:32.456103+00:00 [info] <0.254.0> Khepri leader elected[0m
+rabbitmq_container  | 2025-08-28 08:51:32.456198+00:00 [info] <0.254.0> Waiting for Khepri projections for 30000 ms, 9 retries left[0m
+rabbitmq_container  | 2025-08-28 08:51:32.700133+00:00 [info] <0.254.0> [0m
+rabbitmq_container  | 2025-08-28 08:51:32.700133+00:00 [info] <0.254.0>  Starting RabbitMQ 3.13.7 on Erlang 26.2.5.14 [jit][0m
+rabbitmq_container  | 2025-08-28 08:51:32.700133+00:00 [info] <0.254.0>  Copyright (c) 2007-2024 Broadcom Inc and/or its subsidiaries[0m
+rabbitmq_container  | 2025-08-28 08:51:32.700133+00:00 [info] <0.254.0>  Licensed under the MPL 2.0. Website: https://rabbitmq.com[0m
+rabbitmq_container  |
+rabbitmq_container  |   ##  ##      RabbitMQ 3.13.7
+rabbitmq_container  |   ##  ##
+rabbitmq_container  |   ##########  Copyright (c) 2007-2024 Broadcom Inc and/or its subsidiaries
+rabbitmq_container  |   ######  ##
+rabbitmq_container  |   ##########  Licensed under the MPL 2.0. Website: https://rabbitmq.com
+rabbitmq_container  |
+rabbitmq_container  |   Erlang:      26.2.5.14 [jit]
+rabbitmq_container  |   TLS Library: OpenSSL - OpenSSL 3.1.8 11 Feb 2025
+rabbitmq_container  |   Release series support status: see https://www.rabbitmq.com/release-information
+rabbitmq_container  |
+rabbitmq_container  |   Doc guides:  https://www.rabbitmq.com/docs
+rabbitmq_container  |   Support:     https://www.rabbitmq.com/docs/contact
+rabbitmq_container  |   Tutorials:   https://www.rabbitmq.com/tutorials
+rabbitmq_container  |   Monitoring:  https://www.rabbitmq.com/docs/monitoring
+rabbitmq_container  |   Upgrading:   https://www.rabbitmq.com/docs/upgrade
+rabbitmq_container  |
+rabbitmq_container  |   Logs: stdout
+rabbitmq_container  |
+rabbitmq_container  |   Config file(s): /etc/rabbitmq/conf.d/10-defaults.conf
+rabbitmq_container  |
+rabbitmq_container  |   Starting broker...2025-08-28 08:51:32.701047+00:00 [info] <0.254.0> [0m
+rabbitmq_container  | 2025-08-28 08:51:32.701047+00:00 [info] <0.254.0>  node           : rabbit@5a52aa3b2c96[0m
+rabbitmq_container  | 2025-08-28 08:51:32.701047+00:00 [info] <0.254.0>  home dir       : /var/lib/rabbitmq[0m
+rabbitmq_container  | 2025-08-28 08:51:32.701047+00:00 [info] <0.254.0>  config file(s) : /etc/rabbitmq/conf.d/10-defaults.conf[0m
+rabbitmq_container  | 2025-08-28 08:51:32.701047+00:00 [info] <0.254.0>  cookie hash    : qHyjf0C4yex+z+3uU5EVPQ==[0m
+rabbitmq_container  | 2025-08-28 08:51:32.701047+00:00 [info] <0.254.0>  log(s)         : stdout[0m
+rabbitmq_container  | 2025-08-28 08:51:32.701047+00:00 [info] <0.254.0>  data dir       : /var/lib/rabbitmq/mnesia/rabbit@5a52aa3b2c96[0m
+mysql               | 2025-08-28 08:51:33+00:00 [Note] [Entrypoint]: Database files initialized
+mysql               | 2025-08-28 08:51:33+00:00 [Note] [Entrypoint]: Starting temporary server
+rabbitmq_container  | 2025-08-28 08:51:33.184914+00:00 [info] <0.254.0> Running boot step pre_boot defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.185033+00:00 [info] <0.254.0> Running boot step rabbit_global_counters defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.185449+00:00 [info] <0.254.0> Running boot step rabbit_osiris_metrics defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.185595+00:00 [info] <0.254.0> Running boot step rabbit_core_metrics defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.187006+00:00 [info] <0.254.0> Running boot step rabbit_alarm defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.197714+00:00 [info] <0.329.0> Memory high watermark set to 25594 MiB (26837542502 bytes) of 63985 MiB (67093856256 bytes) total[0m
+rabbitmq_container  | 2025-08-28 08:51:33.201207+00:00 [info] <0.331.0> Enabling free disk space monitoring (disk free space: 437968265216, total memory: 67093856256)[0m
+rabbitmq_container  | 2025-08-28 08:51:33.201286+00:00 [info] <0.331.0> Disk free limit set to 50MB[0m
+rabbitmq_container  | 2025-08-28 08:51:33.203485+00:00 [info] <0.254.0> Running boot step code_server_cache defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.203549+00:00 [info] <0.254.0> Running boot step file_handle_cache defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.209158+00:00 [info] <0.334.0> Limiting to approx 1048479 file handles (943629 sockets)[0m
+rabbitmq_container  | 2025-08-28 08:51:33.209335+00:00 [info] <0.335.0> FHC read buffering: OFF[0m
+rabbitmq_container  | 2025-08-28 08:51:33.209459+00:00 [info] <0.335.0> FHC write buffering: ON[0m
+rabbitmq_container  | 2025-08-28 08:51:33.209855+00:00 [info] <0.254.0> Running boot step worker_pool defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.209934+00:00 [info] <0.315.0> Will use 24 processes for default worker pool[0m
+rabbitmq_container  | 2025-08-28 08:51:33.210016+00:00 [info] <0.315.0> Starting worker pool 'worker_pool' with 24 processes in it[0m
+rabbitmq_container  | 2025-08-28 08:51:33.211028+00:00 [info] <0.254.0> Running boot step database defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.211424+00:00 [info] <0.254.0> Peer discovery: configured backend: rabbit_peer_discovery_classic_config[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.212533+00:00 [notice] <0.316.0> Feature flags: attempt to enable `detailed_queues_endpoint`...[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.286369+00:00 [notice] <0.316.0> Feature flags: `detailed_queues_endpoint` enabled[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.286501+00:00 [notice] <0.316.0> Feature flags: attempt to enable `quorum_queue_non_voters`...[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.334799+00:00 [notice] <0.316.0> Feature flags: `quorum_queue_non_voters` enabled[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.335011+00:00 [notice] <0.316.0> Feature flags: attempt to enable `stream_update_config_command`...[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.391496+00:00 [notice] <0.316.0> Feature flags: `stream_update_config_command` enabled[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.391637+00:00 [notice] <0.316.0> Feature flags: attempt to enable `stream_filtering`...[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.449511+00:00 [notice] <0.316.0> Feature flags: `stream_filtering` enabled[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.449673+00:00 [notice] <0.316.0> Feature flags: attempt to enable `stream_sac_coordinator_unblock_group`...[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.510391+00:00 [notice] <0.316.0> Feature flags: `stream_sac_coordinator_unblock_group` enabled[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.510523+00:00 [notice] <0.316.0> Feature flags: attempt to enable `restart_streams`...[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.566129+00:00 [notice] <0.316.0> Feature flags: `restart_streams` enabled[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.566268+00:00 [notice] <0.316.0> Feature flags: attempt to enable `message_containers`...[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.630868+00:00 [notice] <0.316.0> Feature flags: `message_containers` enabled[0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.631039+00:00 [notice] <0.316.0> Feature flags: attempt to enable `message_containers_deaths_v2`...[0m
+mysql               | 2025-08-28 08:51:33+00:00 [Note] [Entrypoint]: Temporary server started.
+mysql               | '/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.711602+00:00 [notice] <0.316.0> Feature flags: `message_containers_deaths_v2` enabled[0m
+rabbitmq_container  | 2025-08-28 08:51:33.711928+00:00 [info] <0.254.0> DB: virgin node -> run peer discovery[0m
+rabbitmq_container  | [38;5;214m2025-08-28 08:51:33.712011+00:00 [warning] <0.254.0> Classic peer discovery backend: list of nodes does not contain the local node [][0m
+rabbitmq_container  | [38;5;87m2025-08-28 08:51:33.718443+00:00 [notice] <0.44.0> Application mnesia exited with reason: stopped[0m
+rabbitmq_container  | 2025-08-28 08:51:33.790494+00:00 [info] <0.254.0> Waiting for Mnesia tables for 30000 ms, 9 retries left[0m
+rabbitmq_container  | 2025-08-28 08:51:33.790584+00:00 [info] <0.254.0> Successfully synced tables from a peer[0m
+rabbitmq_container  | 2025-08-28 08:51:33.790657+00:00 [info] <0.254.0> Waiting for Mnesia tables for 30000 ms, 9 retries left[0m
+rabbitmq_container  | 2025-08-28 08:51:33.790702+00:00 [info] <0.254.0> Successfully synced tables from a peer[0m
+rabbitmq_container  | 2025-08-28 08:51:33.794496+00:00 [info] <0.254.0> Waiting for Mnesia tables for 30000 ms, 9 retries left[0m
+rabbitmq_container  | 2025-08-28 08:51:33.794572+00:00 [info] <0.254.0> Successfully synced tables from a peer[0m
+rabbitmq_container  | 2025-08-28 08:51:33.794697+00:00 [info] <0.254.0> Running boot step tracking_metadata_store defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.794804+00:00 [info] <0.580.0> Setting up a table for connection tracking on this node: tracked_connection[0m
+rabbitmq_container  | 2025-08-28 08:51:33.794860+00:00 [info] <0.580.0> Setting up a table for per-vhost connection counting on this node: tracked_connection_per_vhost[0m
+rabbitmq_container  | 2025-08-28 08:51:33.794926+00:00 [info] <0.580.0> Setting up a table for per-user connection counting on this node: tracked_connection_per_user[0m
+rabbitmq_container  | 2025-08-28 08:51:33.794967+00:00 [info] <0.580.0> Setting up a table for channel tracking on this node: tracked_channel[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795006+00:00 [info] <0.580.0> Setting up a table for channel tracking on this node: tracked_channel_per_user[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795051+00:00 [info] <0.254.0> Running boot step networking_metadata_store defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795119+00:00 [info] <0.254.0> Running boot step feature_flags defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795231+00:00 [info] <0.254.0> Running boot step codec_correctness_check defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795271+00:00 [info] <0.254.0> Running boot step external_infrastructure defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795290+00:00 [info] <0.254.0> Running boot step rabbit_event defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795460+00:00 [info] <0.254.0> Running boot step rabbit_registry defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795577+00:00 [info] <0.254.0> Running boot step rabbit_auth_mechanism_amqplain defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795656+00:00 [info] <0.254.0> Running boot step rabbit_auth_mechanism_cr_demo defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795715+00:00 [info] <0.254.0> Running boot step rabbit_auth_mechanism_plain defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795761+00:00 [info] <0.254.0> Running boot step rabbit_exchange_type_direct defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795814+00:00 [info] <0.254.0> Running boot step rabbit_exchange_type_fanout defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795861+00:00 [info] <0.254.0> Running boot step rabbit_exchange_type_headers defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795909+00:00 [info] <0.254.0> Running boot step rabbit_exchange_type_topic defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.795956+00:00 [info] <0.254.0> Running boot step rabbit_mirror_queue_mode_all defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.796002+00:00 [info] <0.254.0> Running boot step rabbit_mirror_queue_mode_exactly defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.796043+00:00 [info] <0.254.0> Running boot step rabbit_mirror_queue_mode_nodes defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.796088+00:00 [info] <0.254.0> Running boot step rabbit_priority_queue defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.796128+00:00 [info] <0.254.0> Priority queues enabled, real BQ is rabbit_variable_queue[0m
+rabbitmq_container  | 2025-08-28 08:51:33.796203+00:00 [info] <0.254.0> Running boot step rabbit_queue_location_client_local defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.796262+00:00 [info] <0.254.0> Running boot step rabbit_queue_location_min_masters defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.796321+00:00 [info] <0.254.0> Running boot step rabbit_queue_location_random defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.796388+00:00 [info] <0.254.0> Running boot step kernel_ready defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.796417+00:00 [info] <0.254.0> Running boot step rabbit_sysmon_minder defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.796542+00:00 [info] <0.254.0> Running boot step rabbit_epmd_monitor defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.797074+00:00 [info] <0.588.0> epmd monitor knows us, inter-node communication (distribution) port: 25672[0m
+rabbitmq_container  | 2025-08-28 08:51:33.797160+00:00 [info] <0.254.0> Running boot step guid_generator defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.798394+00:00 [info] <0.254.0> Running boot step rabbit_node_monitor defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.798618+00:00 [info] <0.592.0> Starting rabbit_node_monitor (in ignore mode)[0m
+rabbitmq_container  | 2025-08-28 08:51:33.798759+00:00 [info] <0.254.0> Running boot step delegate_sup defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.799089+00:00 [info] <0.254.0> Running boot step rabbit_memory_monitor defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.799230+00:00 [info] <0.254.0> Running boot step rabbit_fifo_dlx_sup defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.799284+00:00 [info] <0.254.0> Running boot step core_initialized defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.799301+00:00 [info] <0.254.0> Running boot step rabbit_channel_tracking_handler defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.799343+00:00 [info] <0.254.0> Running boot step rabbit_connection_tracking_handler defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.799372+00:00 [info] <0.254.0> Running boot step rabbit_definitions_hashing defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.799413+00:00 [info] <0.254.0> Running boot step rabbit_exchange_parameters defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.818252+00:00 [info] <0.254.0> Running boot step rabbit_mirror_queue_misc defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.818682+00:00 [info] <0.254.0> Running boot step rabbit_policies defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.818961+00:00 [info] <0.254.0> Running boot step rabbit_policy defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.819003+00:00 [info] <0.254.0> Running boot step rabbit_queue_location_validator defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.819253+00:00 [info] <0.254.0> Running boot step rabbit_quorum_memory_manager defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.819286+00:00 [info] <0.254.0> Running boot step rabbit_quorum_queue defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.819387+00:00 [info] <0.254.0> Running boot step rabbit_stream_coordinator defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.819516+00:00 [info] <0.254.0> Running boot step rabbit_vhost_limit defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.819569+00:00 [info] <0.254.0> Running boot step rabbit_federation_parameters defined by app rabbitmq_federation[0m
+rabbitmq_container  | 2025-08-28 08:51:33.819644+00:00 [info] <0.254.0> Running boot step rabbit_federation_supervisor defined by app rabbitmq_federation[0m
+rabbitmq_container  | 2025-08-28 08:51:33.824009+00:00 [info] <0.254.0> Running boot step rabbit_federation_queue defined by app rabbitmq_federation[0m
+rabbitmq_container  | 2025-08-28 08:51:33.824123+00:00 [info] <0.254.0> Running boot step rabbit_federation_upstream_exchange defined by app rabbitmq_federation[0m
+rabbitmq_container  | 2025-08-28 08:51:33.824173+00:00 [info] <0.254.0> Running boot step rabbit_mgmt_reset_handler defined by app rabbitmq_management[0m
+rabbitmq_container  | 2025-08-28 08:51:33.824198+00:00 [info] <0.254.0> Running boot step rabbit_mgmt_db_handler defined by app rabbitmq_management_agent[0m
+rabbitmq_container  | 2025-08-28 08:51:33.824223+00:00 [info] <0.254.0> Management plugin: using rates mode 'basic'[0m
+rabbitmq_container  | 2025-08-28 08:51:33.824372+00:00 [info] <0.254.0> Running boot step recovery defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.833501+00:00 [info] <0.254.0> Running boot step empty_db_check defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.833570+00:00 [info] <0.254.0> Will seed default virtual host and user...[0m
+rabbitmq_container  | 2025-08-28 08:51:33.833653+00:00 [info] <0.254.0> Adding vhost '/' (description: 'Default virtual host', tags: [])[0m
+rabbitmq_container  | 2025-08-28 08:51:33.842690+00:00 [info] <0.652.0> Making sure data directory '/var/lib/rabbitmq/mnesia/rabbit@5a52aa3b2c96/msg_stores/vhosts/628WB79CIFDYO9LJI6DKMI09L' for vhost '/' exists[0m
+rabbitmq_container  | 2025-08-28 08:51:33.843364+00:00 [info] <0.652.0> Setting segment_entry_count for vhost '/' with 0 queues to '2048'[0m
+rabbitmq_container  | 2025-08-28 08:51:33.848779+00:00 [info] <0.652.0> Starting message stores for vhost '/'[0m
+rabbitmq_container  | 2025-08-28 08:51:33.848922+00:00 [info] <0.661.0> Message store "628WB79CIFDYO9LJI6DKMI09L/msg_store_transient": using rabbit_msg_store_ets_index to provide index[0m
+rabbitmq_container  | 2025-08-28 08:51:33.849683+00:00 [info] <0.652.0> Started message store of type transient for vhost '/'[0m
+rabbitmq_container  | 2025-08-28 08:51:33.849819+00:00 [info] <0.665.0> Message store "628WB79CIFDYO9LJI6DKMI09L/msg_store_persistent": using rabbit_msg_store_ets_index to provide index[0m
+rabbitmq_container  | [38;5;214m2025-08-28 08:51:33.850129+00:00 [warning] <0.665.0> Message store "628WB79CIFDYO9LJI6DKMI09L/msg_store_persistent": rebuilding indices from scratch[0m
+rabbitmq_container  | 2025-08-28 08:51:33.850765+00:00 [info] <0.652.0> Started message store of type persistent for vhost '/'[0m
+rabbitmq_container  | 2025-08-28 08:51:33.850866+00:00 [info] <0.652.0> Recovering 0 queues of type rabbit_classic_queue took 7ms[0m
+rabbitmq_container  | 2025-08-28 08:51:33.850953+00:00 [info] <0.652.0> Recovering 0 queues of type rabbit_quorum_queue took 0ms[0m
+rabbitmq_container  | 2025-08-28 08:51:33.850987+00:00 [info] <0.652.0> Recovering 0 queues of type rabbit_stream_queue took 0ms[0m
+rabbitmq_container  | 2025-08-28 08:51:33.852770+00:00 [info] <0.254.0> Created user 'guest'[0m
+rabbitmq_container  | 2025-08-28 08:51:33.853637+00:00 [info] <0.254.0> Successfully set user tags for user 'guest' to [administrator][0m
+rabbitmq_container  | 2025-08-28 08:51:33.854572+00:00 [info] <0.254.0> Successfully set permissions for user 'guest' in virtual host '/' to '.*', '.*', '.*'[0m
+rabbitmq_container  | 2025-08-28 08:51:33.854647+00:00 [info] <0.254.0> Running boot step rabbit_observer_cli defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.854711+00:00 [info] <0.254.0> Running boot step rabbit_looking_glass defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.854734+00:00 [info] <0.254.0> Running boot step rabbit_core_metrics_gc defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.854858+00:00 [info] <0.254.0> Running boot step background_gc defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.854989+00:00 [info] <0.254.0> Running boot step routing_ready defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.855025+00:00 [info] <0.254.0> Running boot step pre_flight defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.855044+00:00 [info] <0.254.0> Running boot step notify_cluster defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.855064+00:00 [info] <0.254.0> Running boot step networking defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.855133+00:00 [info] <0.254.0> Running boot step rabbit_quorum_queue_periodic_membership_reconciliation defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.855227+00:00 [info] <0.254.0> Running boot step definition_import_worker_pool defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.855261+00:00 [info] <0.315.0> Starting worker pool 'definition_import_pool' with 24 processes in it[0m
+rabbitmq_container  | 2025-08-28 08:51:33.856027+00:00 [info] <0.254.0> Running boot step cluster_name defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.856091+00:00 [info] <0.254.0> Initialising internal cluster ID to 'rabbitmq-cluster-id-VBwUfRTz8umpa8xS2Kcz8g'[0m
+rabbitmq_container  | 2025-08-28 08:51:33.856824+00:00 [info] <0.254.0> Running boot step virtual_host_reconciliation defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.857113+00:00 [info] <0.254.0> Running boot step direct_client defined by app rabbit[0m
+rabbitmq_container  | 2025-08-28 08:51:33.857200+00:00 [info] <0.254.0> Running boot step rabbit_federation_exchange defined by app rabbitmq_federation[0m
+rabbitmq_container  | 2025-08-28 08:51:33.857340+00:00 [info] <0.254.0> Running boot step rabbit_management_load_definitions defined by app rabbitmq_management[0m
+rabbitmq_container  | 2025-08-28 08:51:33.857414+00:00 [info] <0.722.0> Resetting node maintenance status[0m
+rabbitmq_container  | [38;5;214m2025-08-28 08:51:33.984112+00:00 [warning] <0.751.0> Deprecated features: `management_metrics_collection`: Feature `management_metrics_collection` is deprecated.[0m
+rabbitmq_container  | [38;5;214m2025-08-28 08:51:33.984112+00:00 [warning] <0.751.0> By default, this feature can still be used for now.[0m
+rabbitmq_container  | [38;5;214m2025-08-28 08:51:33.984112+00:00 [warning] <0.751.0> Its use will not be permitted by default in a future minor RabbitMQ version and the feature will be removed from a future major RabbitMQ version; actual versions to be determined.[0m
+rabbitmq_container  | [38;5;214m2025-08-28 08:51:33.984112+00:00 [warning] <0.751.0> To continue using this feature when it is not permitted by default, set the following parameter in your configuration:[0m
+rabbitmq_container  | [38;5;214m2025-08-28 08:51:33.984112+00:00 [warning] <0.751.0>     "deprecated_features.permit.management_metrics_collection = true"[0m
+rabbitmq_container  | [38;5;214m2025-08-28 08:51:33.984112+00:00 [warning] <0.751.0> To test RabbitMQ as if the feature was removed, set this in your configuration:[0m
+rabbitmq_container  | [38;5;214m2025-08-28 08:51:33.984112+00:00 [warning] <0.751.0>     "deprecated_features.permit.management_metrics_collection = false"[0m
+email_service_container  |
+email_service_container  |   .   ____          _            __ _ _
+email_service_container  |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+email_service_container  | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+email_service_container  |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+email_service_container  |   '  |____| .__|_| |_|_| |_\__, | / / / /
+email_service_container  |  =========|_|==============|___/=/_/_/_/
+email_service_container  |
+email_service_container  |  :: Spring Boot ::                (v3.5.4)
+email_service_container  |
+email_service_container  | 2025-08-28T08:51:34.809Z  INFO 1 --- [emailService] [           main] com.example.otelDemo.EmailApplication    : Starting EmailApplication v0.0.1-SNAPSHOT using Java 21 with PID 1 (/app/app.jar started by root in /app)
+email_service_container  | 2025-08-28T08:51:34.814Z  INFO 1 --- [emailService] [           main] com.example.otelDemo.EmailApplication    : No active profile set, falling back to 1 default profile: "default"
+mysql                    | 2025-08-28 08:51:35+00:00 [Note] [Entrypoint]: Creating database mydatabase
+mysql                    |
+mysql                    | 2025-08-28 08:51:35+00:00 [Note] [Entrypoint]: Stopping temporary server
+email_service_container  | 2025-08-28T08:51:35.884Z  INFO 1 --- [emailService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8083 (http)
+email_service_container  | 2025-08-28T08:51:35.901Z  INFO 1 --- [emailService] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+email_service_container  | 2025-08-28T08:51:35.901Z  INFO 1 --- [emailService] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.43]
+email_service_container  | 2025-08-28T08:51:35.925Z  INFO 1 --- [emailService] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+email_service_container  | 2025-08-28T08:51:35.927Z  INFO 1 --- [emailService] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1061 ms
+email_service_container  | 2025-08-28T08:51:36.249Z  WARN 1 --- [emailService] [           main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+rabbitmq_container       | 2025-08-28 08:51:36.336552+00:00 [info] <0.788.0> Management plugin: HTTP (non-TLS) listener started on port 15672[0m
+rabbitmq_container       | 2025-08-28 08:51:36.336738+00:00 [info] <0.818.0> Statistics database started.[0m
+rabbitmq_container       | 2025-08-28 08:51:36.336822+00:00 [info] <0.817.0> Starting worker pool 'management_worker_pool' with 3 processes in it[0m
+rabbitmq_container       | 2025-08-28 08:51:36.351411+00:00 [info] <0.836.0> Prometheus metrics: HTTP (non-TLS) listener started on port 15692[0m
+rabbitmq_container       | 2025-08-28 08:51:36.351568+00:00 [info] <0.722.0> Ready to start client connection listeners[0m
+rabbitmq_container       | 2025-08-28 08:51:36.356130+00:00 [info] <0.880.0> started TCP listener on [::]:5672[0m
+rabbitmq_container       |  completed with 5 plugins.
+rabbitmq_container       | 2025-08-28 08:51:36.429577+00:00 [info] <0.722.0> Server startup complete; 5 plugins started.[0m
+rabbitmq_container       | 2025-08-28 08:51:36.429577+00:00 [info] <0.722.0>  * rabbitmq_prometheus[0m
+rabbitmq_container       | 2025-08-28 08:51:36.429577+00:00 [info] <0.722.0>  * rabbitmq_federation[0m
+rabbitmq_container       | 2025-08-28 08:51:36.429577+00:00 [info] <0.722.0>  * rabbitmq_management[0m
+rabbitmq_container       | 2025-08-28 08:51:36.429577+00:00 [info] <0.722.0>  * rabbitmq_management_agent[0m
+rabbitmq_container       | 2025-08-28 08:51:36.429577+00:00 [info] <0.722.0>  * rabbitmq_web_dispatch[0m
+rabbitmq_container       | 2025-08-28 08:51:36.471140+00:00 [info] <0.9.0> Time to start RabbitMQ: 6556 ms[0m
+mysql                    | 2025-08-28 08:51:36+00:00 [Note] [Entrypoint]: Temporary server stopped
+mysql                    |
+mysql                    | 2025-08-28 08:51:36+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+mysql                    |
+email_service_container  | 2025-08-28T08:51:36.672Z  INFO 1 --- [emailService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8083 (http) with context path '/'
+email_service_container  | 2025-08-28T08:51:36.677Z  INFO 1 --- [emailService] [           main] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [rabbitmq:5672]
+rabbitmq_container       | 2025-08-28 08:51:36.703257+00:00 [info] <0.884.0> accepting AMQP connection <0.884.0> (172.20.0.4:52334 -> 172.20.0.3:5672)[0m
+rabbitmq_container       | 2025-08-28 08:51:36.737996+00:00 [info] <0.884.0> connection <0.884.0> (172.20.0.4:52334 -> 172.20.0.3:5672) has a client-provided name: rabbitConnectionFactory#294aba23:0[0m
+rabbitmq_container       | 2025-08-28 08:51:36.742804+00:00 [info] <0.884.0> connection <0.884.0> (172.20.0.4:52334 -> 172.20.0.3:5672 - rabbitConnectionFactory#294aba23:0): user 'guest' authenticated and granted access to vhost '/'[0m
+email_service_container  | 2025-08-28T08:51:36.746Z  INFO 1 --- [emailService] [           main] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#294aba23:0/SimpleConnection@41bfa9e9 [delegate=amqp://guest@172.20.0.3:5672/, localPort=52334]
+email_service_container  | 2025-08-28T08:51:36.830Z  INFO 1 --- [emailService] [           main] com.example.otelDemo.EmailApplication    : Started EmailApplication in 2.522 seconds (process running for 3.069)
+database_service_container  |
+database_service_container  |   .   ____          _            __ _ _
+database_service_container  |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+database_service_container  | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+database_service_container  |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+database_service_container  |   '  |____| .__|_| |_|_| |_\__, | / / / /
+database_service_container  |  =========|_|==============|___/=/_/_/_/
+database_service_container  |
+database_service_container  |  :: Spring Boot ::                (v3.5.4)
+database_service_container  |
+database_service_container  | 2025-08-28T08:51:40.363Z  INFO 1 --- [dataBaseService] [           main] c.e.otelDemo.GuesstBookApplication       : Starting GuesstBookApplication v0.0.1-SNAPSHOT using Java 21 with PID 1 (/app/app.jar started by root in /app)
+database_service_container  | 2025-08-28T08:51:40.368Z  INFO 1 --- [dataBaseService] [           main] c.e.otelDemo.GuesstBookApplication       : No active profile set, falling back to 1 default profile: "default"
+guestbook_service_container  |
+guestbook_service_container  |   .   ____          _            __ _ _
+guestbook_service_container  |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+guestbook_service_container  | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+guestbook_service_container  |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+guestbook_service_container  |   '  |____| .__|_| |_|_| |_\__, | / / / /
+guestbook_service_container  |  =========|_|==============|___/=/_/_/_/
+guestbook_service_container  |
+guestbook_service_container  |  :: Spring Boot ::                (v3.5.4)
+guestbook_service_container  |
+guestbook_service_container  | 2025-08-28T08:51:40.519Z  INFO 1 --- [guestBookService] [           main] c.e.otelDemo.GuesstBookApplication       : Starting GuesstBookApplication v0.0.1-SNAPSHOT using Java 21 with PID 1 (/app/app.jar started by root in /app)
+guestbook_service_container  | 2025-08-28T08:51:40.524Z  INFO 1 --- [guestBookService] [           main] c.e.otelDemo.GuesstBookApplication       : No active profile set, falling back to 1 default profile: "default"
+database_service_container   | 2025-08-28T08:51:41.283Z  INFO 1 --- [dataBaseService] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+database_service_container   | 2025-08-28T08:51:41.342Z  INFO 1 --- [dataBaseService] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 49 ms. Found 1 JPA repository interface.
+guestbook_service_container  | 2025-08-28T08:51:41.664Z  INFO 1 --- [guestBookService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+guestbook_service_container  | 2025-08-28T08:51:41.681Z  INFO 1 --- [guestBookService] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+guestbook_service_container  | 2025-08-28T08:51:41.681Z  INFO 1 --- [guestBookService] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.43]
+guestbook_service_container  | 2025-08-28T08:51:41.706Z  INFO 1 --- [guestBookService] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+guestbook_service_container  | 2025-08-28T08:51:41.707Z  INFO 1 --- [guestBookService] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1104 ms
+database_service_container   | 2025-08-28T08:51:41.864Z  INFO 1 --- [dataBaseService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8082 (http)
+database_service_container   | 2025-08-28T08:51:41.880Z  INFO 1 --- [dataBaseService] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+database_service_container   | 2025-08-28T08:51:41.880Z  INFO 1 --- [dataBaseService] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.43]
+database_service_container   | 2025-08-28T08:51:41.909Z  INFO 1 --- [dataBaseService] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+database_service_container   | 2025-08-28T08:51:41.910Z  INFO 1 --- [dataBaseService] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1473 ms
+database_service_container   | 2025-08-28T08:51:42.049Z  INFO 1 --- [dataBaseService] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+guestbook_service_container  | 2025-08-28T08:51:42.108Z  INFO 1 --- [guestBookService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+guestbook_service_container  | 2025-08-28T08:51:42.121Z  INFO 1 --- [guestBookService] [           main] c.e.otelDemo.GuesstBookApplication       : Started GuesstBookApplication in 2.154 seconds (process running for 2.617)
+database_service_container   | 2025-08-28T08:51:42.438Z  INFO 1 --- [dataBaseService] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@42ea7565
+database_service_container   | 2025-08-28T08:51:42.440Z  INFO 1 --- [dataBaseService] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+database_service_container   | 2025-08-28T08:51:42.530Z  INFO 1 --- [dataBaseService] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+database_service_container   | 2025-08-28T08:51:42.574Z  INFO 1 --- [dataBaseService] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.22.Final
+database_service_container   | 2025-08-28T08:51:42.596Z  INFO 1 --- [dataBaseService] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+database_service_container   | 2025-08-28T08:51:42.877Z  INFO 1 --- [dataBaseService] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+database_service_container   | 2025-08-28T08:51:42.930Z  WARN 1 --- [dataBaseService] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+database_service_container   | 2025-08-28T08:51:42.930Z  WARN 1 --- [dataBaseService] [           main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+database_service_container   | 2025-08-28T08:51:42.941Z  INFO 1 --- [dataBaseService] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+database_service_container   | 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+database_service_container   | 	Database driver: undefined/unknown
+database_service_container   | 	Database version: 8.0
+database_service_container   | 	Autocommit mode: undefined/unknown
+database_service_container   | 	Isolation level: undefined/unknown
+database_service_container   | 	Minimum pool size: undefined/unknown
+database_service_container   | 	Maximum pool size: undefined/unknown
+database_service_container   | 2025-08-28T08:51:43.370Z  INFO 1 --- [dataBaseService] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+database_service_container   | 2025-08-28T08:51:43.371Z  INFO 1 --- [dataBaseService] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+database_service_container   | 2025-08-28T08:51:43.513Z  WARN 1 --- [dataBaseService] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+guestbook_service_container  | 2025-08-28T08:51:43.690Z  INFO 1 --- [guestBookService] [nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+guestbook_service_container  | 2025-08-28T08:51:43.691Z  INFO 1 --- [guestBookService] [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+guestbook_service_container  | 2025-08-28T08:51:43.692Z  INFO 1 --- [guestBookService] [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+database_service_container   | 2025-08-28T08:51:43.881Z  INFO 1 --- [dataBaseService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8082 (http) with context path '/'
+database_service_container   | 2025-08-28T08:51:43.895Z  INFO 1 --- [dataBaseService] [           main] c.e.otelDemo.GuesstBookApplication       : Started GuesstBookApplication in 4.051 seconds (process running for 4.571)
+database_service_container   | 2025-08-28T08:51:45.586Z  INFO 1 --- [dataBaseService] [nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+database_service_container   | 2025-08-28T08:51:45.587Z  INFO 1 --- [dataBaseService] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+database_service_container   | 2025-08-28T08:51:45.588Z  INFO 1 --- [dataBaseService] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+main_service_container       |
+main_service_container       |   .   ____          _            __ _ _
+main_service_container       |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+main_service_container       | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+main_service_container       |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+main_service_container       |   '  |____| .__|_| |_|_| |_\__, | / / / /
+main_service_container       |  =========|_|==============|___/=/_/_/_/
+main_service_container       |
+main_service_container       |  :: Spring Boot ::                (v3.5.4)
+main_service_container       |
+main_service_container       | 2025-08-28T08:51:46.924Z  INFO 1 --- [otelDemo] [           main] c.example.otelDemo.OtelDemoApplication   : Starting OtelDemoApplication v0.0.1-SNAPSHOT using Java 21 with PID 1 (/app/app.jar started by root in /app)
+main_service_container       | 2025-08-28T08:51:46.926Z  INFO 1 --- [otelDemo] [           main] c.example.otelDemo.OtelDemoApplication   : No active profile set, falling back to 1 default profile: "default"
+main_service_container       | 2025-08-28T08:51:47.799Z  INFO 1 --- [otelDemo] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+main_service_container       | 2025-08-28T08:51:47.813Z  INFO 1 --- [otelDemo] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+main_service_container       | 2025-08-28T08:51:47.813Z  INFO 1 --- [otelDemo] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.43]
+main_service_container       | 2025-08-28T08:51:47.844Z  INFO 1 --- [otelDemo] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+main_service_container       | 2025-08-28T08:51:47.845Z  INFO 1 --- [otelDemo] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 881 ms
+main_service_container       | 2025-08-28T08:51:48.225Z  INFO 1 --- [otelDemo] [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+main_service_container       | 2025-08-28T08:51:48.463Z  INFO 1 --- [otelDemo] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+main_service_container       | 2025-08-28T08:51:48.475Z  INFO 1 --- [otelDemo] [           main] c.example.otelDemo.OtelDemoApplication   : Started OtelDemoApplication in 1.918 seconds (process running for 2.279)
+main_service_container       | 2025-08-28T08:51:50.387Z  INFO 1 --- [otelDemo] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+main_service_container       | 2025-08-28T08:51:50.388Z  INFO 1 --- [otelDemo] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+main_service_container       | 2025-08-28T08:51:50.388Z  INFO 1 --- [otelDemo] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+Gracefully Stopping... press Ctrl+C again to force
+</div>
+</body>
+</html>

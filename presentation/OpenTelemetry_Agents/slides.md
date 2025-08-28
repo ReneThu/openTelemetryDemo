@@ -199,10 +199,10 @@ layout: FullLessPadding
 <LazyIframe url="http://localhost:8080/" />
 
 ---
-layout: center
+layout: full
 ---
 
-<h1>TODO not for AI add slide with log output</h1>
+<iframe src="htmldocs/log_output.html" width="100%" height="500px" style="border: none;"></iframe>
 
 ---
 layout: center
@@ -230,38 +230,194 @@ layout: FullLessPadding
 layout: center
 ---
 
-<h1>TODO not for AI add mercy meme with otel</h1>
+<img v-click
+class="fit-picture-mercyotel"
+src="./pictures/mercyotel.jpg"
+/>
+
+<style>
+  .fit-picture-mercyotel {
+    width: 450px;
+    height: auto; /* Maintains aspect ratio */
+  }
+</style>
+
 
 ---
 layout: center
 ---
 
-<h1>TODO add slide explaining what otel is</h1>
+# What is OpenTelemetry?
+
+<ul>
+  <li v-click>Vendor-neutral standard for telemetry</li>
+  <li v-click>Composed of APIs, SDKs, and instrumentation</li>
+  <li v-click>Standardized semantic conventions</li>
+  <li v-click>Exports to many backends</li>
+</ul>
+
 
 ---
 layout: center
 ---
 
-<h1>TODO add slide explaining what are the other monitoring tools that we are going to use</h1>
+# OTel Components
+
+<ul>
+  <li v-click>API</li>
+  <li v-click>SDK</li>
+  <li v-click>
+    <span >Zero-code</span>
+  </li>
+  <li v-click>Collector</li>
+</ul>
+
+<!-- Presenter Notes -->
+<!-- 
+- API: The interface developers use to instrument their code and define telemetry data structures.
+- SDK: The implementation that processes telemetry data and sends it to exporters.
+- Zero-code: Automatic instrumentation requiring no changes to application code.
+- Collector: A service that receives telemetry data, processes it, and exports it to monitoring backends like Dynatrace or Prometheus.
+-->
 
 ---
 layout: center
 ---
 
-<h1>TODO add slide explaining how otel can be used e.g. so sdk api and the otel agent</h1>
+<h1>How Can OpenTelemetry Be Used?</h1>
+
+<ul>
+  <li v-click><strong>SDK/API:</strong> Directly instrument your code using OpenTelemetry libraries.</li>
+  <li v-click v-mark="{ at: 3, color: '#404c8f', type: 'highlight' }"><strong>Otel Agent:</strong> Attach an OpenTelemetry agent to your application for automatic instrumentation.</li>
+</ul>
+
 
 ---
 layout: center
 ---
 
-<h1>TODO add slide showing how the otel agent has to be added to your application</h1>
+<h1>Adding the OpenTelemetry Agent</h1>
+
+<ol>
+  <li v-click>Download the OpenTelemetry Java agent JAR file.</li>
+  <li v-click>Start your application with the agent attached:
+    <pre><code>java -javaagent:path/to/opentelemetry-javaagent.jar -jar your-app.jar</code></pre>
+  </li>
+</ol>
+
 
 ---
 layout: center
 ---
 
-<h1>TODO not for AI add a code example how I have added otel to my docker compose. This will need to be split up into multible slides</h1>
+<v-clicks at="1">
+<div>
 
+````md magic-move
+```docker{all|all}
+FROM openjdk:21-jdk-slim
+
+WORKDIR /app
+
+COPY build/libs/mainService-0.0.1-SNAPSHOT.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+```docker
+FROM openjdk:21-jdk-slim
+
+WORKDIR /app
+
+COPY otel/opentelemetry-javaagent.jar /otel/opentelemetry-javaagent.jar
+
+COPY build/libs/mainService-0.0.1-SNAPSHOT.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+````
+
+</div>
+</v-clicks>
+
+---
+layout: center
+---
+
+<v-clicks at="1">
+<div>
+
+````md magic-move
+```docker{all|all}
+services:
+  mainService:
+    image: mainservice:latest
+    ports:
+      - "8080:8080"
+    container_name: main_service_container
+    depends_on:
+      guestBookService:
+        condition: service_healthy
+      dataBaseService:
+        condition: service_healthy
+    networks:
+      - app-network
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+```
+```docker
+services:
+  mainService:
+    ....
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      ....
+    ....
+```
+```docker{all|7|8|9|all}
+services:
+  mainService:
+    ....
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+    ....
+```
+````
+
+</div>
+</v-clicks>
+
+---
+layout: center
+---
+
+<v-clicks at="1">
+<div>
+
+```docker{all|all|2|4-7|5|6|7|all}
+  jaeger:
+    image: jaegertracing/all-in-one:1.46
+    container_name: jaeger
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+      - "4318:4318"
+    networks:
+      - app-network
+```
+
+</div>
+</v-clicks>
 
 ---
 layout: center
@@ -279,13 +435,21 @@ layout: center
 layout: center
 ---
 
-<h1>TODO add slide asking the question how is otel able to do that</h1>
+<h1>How Does OpenTelemetry Achieve This?</h1>
+
+<p>OpenTelemetry leverages advanced techniques like bytecode instrumentation and the Java Virtual Machine Tool Interface (JVMTI) to collect telemetry data seamlessly.</p>
 
 ---
 layout: center
 ---
 
-<h1>TODO long story short with the JVMTI. add slide explaining how the JVMTI works and what it does</h1>
+<h1>Understanding JVMTI</h1>
+
+<p>The Java Virtual Machine Tool Interface (JVMTI) is a native programming interface for the JVM. It allows tools to inspect and modify the state and behavior of Java applications at runtime.</p>
+<ul>
+  <li>Provides hooks for lifecycle events like class loading, thread start/stop.</li>
+  <li>Used for profiling, debugging, and monitoring.</li>
+</ul>
 
 ---
 layout: center
