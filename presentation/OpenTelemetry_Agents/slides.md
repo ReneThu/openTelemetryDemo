@@ -233,6 +233,11 @@ dockerComposePath="/home/marco/Documents/Development/techEvangelistGeneric/otelD
 name="simple-deploy"
 />
 
+---
+layout: FullLessPadding
+---
+
+<DockerComposeManager />
 
 ---
 layout: FullLessPadding
@@ -260,12 +265,6 @@ src="./pictures/tooManyLogs.jpeg"
     height: auto; /* Maintains aspect ratio */
   }
 </style>
-
----
-layout: FullLessPadding
----
-
-<DockerComposeManager />
 
 ---
 layout: center
@@ -461,48 +460,265 @@ layout: center
 </v-clicks>
 
 ---
+layout: FullLessPadding
+---
+
+<DockerManager
+dockerComposePath="/home/marco/Documents/Development/techEvangelistGeneric/otelDemo/docker-compose-otel.yaml"
+name="otel-deploy"
+/>
+
+
+---
+layout: FullLessPadding
+---
+<LazyIframe url="http://localhost:8080/" />
+
+
+---
+layout: FullLessPadding
+zoom: 0.65
+---
+<LazyIframe url="http://localhost:16686" />
+
+
+---
+layout: FullLessPadding
+---
+
+<DockerComposeManager />
+
+---
+layout: center
+---
+<div>
+  <h1 v-click>How Does OpenTelemetry Achieve This?</h1>
+</div>
+<div class="image-container">
+  <img 
+    v-click
+    class="fit-picture-elmoOtel"
+    src="./pictures/otelElmoMeme.jpg"
+  />
+</div>
+
+<style>
+  .fit-picture-elmoOtel {
+    width: 300px;
+    height: auto; /* Maintains aspect ratio */
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center; /* Centers the image horizontally */
+    align-items: center; /* Centers the image vertically (if needed) */
+  }
+</style>
+
+
+---
 layout: center
 ---
 
-<h1>TODO not for AI add a new deplyoment slides for the deploy with otel</h1>
+<h1>What are agents?</h1>
 
----
-layout: center
----
-
-<h1>TODO not for AI add Iframes of the varius tools that I am going to show</h1>
-
----
-layout: center
----
-
-<h1>How Does OpenTelemetry Achieve This?</h1>
-
-<p>OpenTelemetry leverages advanced techniques like bytecode instrumentation and the Java Virtual Machine Tool Interface (JVMTI) to collect telemetry data seamlessly.</p>
-
----
-layout: center
----
-
-<h1>Understanding JVMTI</h1>
-
-<p>The Java Virtual Machine Tool Interface (JVMTI) is a native programming interface for the JVM. It allows tools to inspect and modify the state and behavior of Java applications at runtime.</p>
 <ul>
-  <li>Provides hooks for lifecycle events like class loading, thread start/stop.</li>
-  <li>Used for profiling, debugging, and monitoring.</li>
+  <li v-click>
+    Provides services that allow Java programming language agents to instrument programs running on the JVM. The mechanism for instrumentation is modification of the byte-codes of methods.
+  </li>
+  <li v-click>
+    Used for profiling, debugging, and monitoring.
+  </li>
+  <li v-click>
+    -javaagent:&lt;jarpath&gt;[=&lt;options&gt;]
+  </li>
 </ul>
 
 ---
 layout: center
 ---
 
-<h1>TODO JVMTI is not create what else can we use, java agents!</h1>
+````md magic-move
+```docker{all|7}
+services:
+  mainService:
+    ....
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+    ....
+```
+````
 
 ---
 layout: center
 ---
 
-<h1>TODO not for AI show basic example on how java agents would work. take this from other presentations</h1>
+<v-click>
+  <div class="image">
+      <img src="./pictures/applePie.png" alt=""/>
+  </div>
+</v-click>
+
+<!--
+There is qute from Carl Sagan.
+If you wish to make an apple pie from scratch, you must first invent the universe.
+
+If we really want to understand how code hotswapping works we first need to understand
+how classes are loaded in the JVM
+-->
+
+---
+layout: center
+---
+
+<v-click>
+  <h1>What happens during class loading?</h1>
+</v-click>
+
+<div>
+  <ul>
+      <li v-click>
+        <span v-mark.underscore.orange=6>
+          Loading
+        </span>
+      </li>
+    <li v-click>Verify</li>
+    <li v-click>Prepare</li>
+    <li v-click>(Optionally) Resolve</li>
+  </ul>
+</div>
+
+<!--
+chaper 12 of the java langues specification as well as chaper 5 of the java virtual machine specification talk about that.
+So there are 5 steps that are taken.
+
+The first one loading. 
+So if a class is requested that is not laoded classloader will be used to look for a bianry representation of the class.
+
+Verification:
+This means that the class is checkt that it is well-formated. So with a proper symbol table and so on.
+
+Preparation:
+static storage and any data structures
+
+Resolution(optional):
+
+checking symbolic references from the class to other
+classes and interfaces.
+
+The Loading step is the one we are interested in.
+-->
+
+---
+layout: center
+---
+
+<v-click>
+  <h1>Observe when classes are loaded</h1>
+</v-click>
+
+<v-clicks>
+<div>
+```java{all}
+void JNICALL
+ClassFileLoadHook(jvmtiEnv *jvmti_env,
+        JNIEnv* jni_env,
+        jclass class_being_redefined,
+        jobject loader,
+        const char* name,
+        jobject protection_domain,
+        jint class_data_len,
+        const unsigned char* class_data,
+        jint* new_class_data_len,
+        unsigned char** new_class_data)
+```
+</div>
+
+</v-clicks>
+
+---
+layout: center
+---
+
+<v-clicks>
+<h1>Is there a better way?</h1>
+</v-clicks>
+
+<div>
+  <ul>
+    <li v-click>Java Agents</li>
+    <li v-click>java.lang.instrument</li>
+    <li v-click>java -javaagent:agent.jar -jar helloWorld.jar</li>
+  </ul>
+</div>
+
+---
+layout: center
+---
+
+<v-clicks>
+
+````md magic-move{lines: true}
+```java{all|2}
+public class SampleAgent {
+    public static void premain(String arguments, Instrumentation instrumentationObject) {
+    } 
+}
+```
+
+```java{all|3}
+public class SampleAgent {
+    public static void premain(String arguments, Instrumentation instrumentationObject) {
+        instrumentation.addTransformer(new SampleTransformer(), false);
+    }
+}
+```
+````
+</v-clicks>
+
+---
+layout: center
+---
+
+<v-clicks at="1">
+<div>
+````md magic-move{lines: true}
+```java{all|all|3-7|3|4|5|6|7|8|all}
+public class SampleTransformer implements ClassFileTransformer {
+    @Override
+    public byte[] transform(ClassLoader loader,
+                            String className,
+                            Class<?> classBeingRedefined,
+                            ProtectionDomain protectionDomain,
+                            byte[] classFileBuffer) throws IllegalClassFormatException {
+        return transformClassFile(classFileBuffer);
+    }
+}
+```
+```java{all}
+public class HotSwapTransformer implements ClassFileTransformer {
+    @Override
+    public byte[] transform(ClassLoader loader,
+                            String className,
+                            Class<?> classBeingRedefined,
+                            ProtectionDomain protectionDomain,
+                            byte[] classFileBuffer) throws IllegalClassFormatException {
+        return transformClassFile(classFileBuffer);
+    }
+    
+    public byte[] transformClassFile(byte[] classfileBuffer) {
+        //TODO
+        return null;
+    }
+}
+```
+````
+</div>
+</v-clicks>
 
 ---
 layout: center

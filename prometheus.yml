@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'otel-services'
+    static_configs:
+      - targets: ['main_service_container:8080', 'guestbook_service_container:8081', 'database_service_container:8082']
