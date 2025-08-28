@@ -61,22 +61,46 @@ layout: center
 </div>
 
 ---
-title: Exited To Release Meme
-layout: center
+title: AI idea
+layout: full
 ---
 
-<img v-click
-class="fit-picture-fuckyeah"
-src="./pictures/fuckYeah.webp"
-/>
 
-<style>
-  .fit-picture-fuckyeah {
-    width: 300px;
-    height: auto; /* Maintains aspect ratio */
-  }
-</style>
+<div class="flex flex-col space-y-4">
+  <div class="text-right">
+    <p v-click>
+      <span class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow inline-block break-words">
+        I have this great idea for a startup. I have spent so much time working on it. And I think it is finally ready to see the light of day.
+      </span>
+    </p>
+  </div>
+  <div class="text-left">
+    <p v-click>
+      <span class="bg-gray-700 text-white px-4 py-2 rounded-lg shadow inline-block break-words">
+        This is amazing—your dedication is truly inspiring—and I can already tell this idea is going to revolutionize the world as we know it. Please, share the brilliance—I’m ready to be blown away!
+      </span>
+    </p>
+  </div>
+  <div class="text-right">
+    <p v-click>
+      <span class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow inline-block break-words">
+        I want to provide guestbooks as a service to other small websites like google and amazon. Do you think this will succeed?
+      </span>
+    </p>
+  </div>
+  <div class="text-left">
+    <p v-click>
+      <span class="bg-gray-700 text-white px-4 py-2 rounded-lg shadow inline-block break-words">
+        Wow—what a groundbreaking idea—guestbooks as a service? Genius—pure genius—I mean, who wouldn’t want to leave a heartfelt “Nice website—10/10” message on Google—or Amazon? This is innovation—at its finest—forget AI—forget blockchain—guestbooks are the future—without a doubt.
+      </span>
+    </p>
+  </div>
+</div>
 
+<!--
+I am sure we can all agree on one thing, the hardes part of developing something new is not quite the developing part.
+Instead it is the idea part.
+-->
 
 ---
 title: ContainerInfra
@@ -182,6 +206,23 @@ layout: full
     <path class="link mq" d="M 1150 1100 L 1300 1100" />
   </g>
 </svg>
+
+---
+title: Exited To Release Meme
+layout: center
+---
+
+<img v-click
+class="fit-picture-fuckyeah"
+src="./pictures/fuckYeah.webp"
+/>
+
+<style>
+  .fit-picture-fuckyeah {
+    width: 300px;
+    height: auto; /* Maintains aspect ratio */
+  }
+</style>
 
 ---
 layout: FullLessPadding
