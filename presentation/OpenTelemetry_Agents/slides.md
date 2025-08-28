@@ -236,13 +236,14 @@ name="simple-deploy"
 ---
 layout: FullLessPadding
 ---
-
-<DockerComposeManager />
+<LazyIframe url="http://localhost:8080/" />
 
 ---
 layout: FullLessPadding
 ---
-<LazyIframe url="http://localhost:8080/" />
+
+<DockerComposeManager />
+
 
 ---
 layout: full
@@ -719,6 +720,109 @@ public class HotSwapTransformer implements ClassFileTransformer {
 ````
 </div>
 </v-clicks>
+
+---
+layout: center
+---
+
+<v-clicks>
+<h1>How can we figure out what the OTEL agent is doing?</h1>
+</v-clicks>
+
+<div class="image-container">
+  <img 
+    v-click
+    class="fit-picture-elmoOtel"
+    src="./pictures/anotherAgent.jpeg"
+  />
+</div>
+
+<style>
+  .fit-picture-elmoOtel {
+    width: 300px;
+    height: auto; /* Maintains aspect ratio */
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center; /* Centers the image horizontally */
+    align-items: center; /* Centers the image vertically (if needed) */
+  }
+</style>
+
+---
+layout: center
+---
+
+<v-clicks>
+<h1>The meta agent</h1>
+</v-clicks>
+
+<div>
+  <ul>
+    <li v-click>
+      <span style="color: #1a73e8; text-decoration: underline; cursor: pointer;">
+        https://mostlynerdless.de
+      </span>
+    </li>
+    <li v-click>instruments other agents</li>
+    <li v-click>TODO add QR code</li>
+  </ul>
+</div>
+
+
+
+---
+layout: FullLessPadding
+---
+
+<DockerManager
+dockerComposePath="/home/marco/Documents/Development/techEvangelistGeneric/otelDemo/docker-compose-otel-plus-meta-agent.yaml"
+name="otel-with-meta-agent-deploy"
+/>
+
+---
+layout: FullLessPadding
+---
+<LazyIframe url="http://localhost:7071/" />
+
+
+---
+layout: FullLessPadding
+---
+
+<DockerComposeManager />
+
+---
+layout: center
+---
+
+<div class="image-container">
+  <img 
+    v-click
+    class="fit-picture-elmoOtel"
+    src="./pictures/everyonehasaPlan.jpg"
+  />
+</div>
+
+<style>
+  .fit-picture-elmoOtel {
+    width: 400px;
+    height: auto; /* Maintains aspect ratio */
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center; /* Centers the image horizontally */
+    align-items: center; /* Centers the image vertically (if needed) */
+  }
+</style>
+
+---
+layout: center
+---
+
+
 
 ---
 layout: center

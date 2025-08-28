@@ -5,6 +5,7 @@ services:
     image: mainservice:latest
     ports:
       - "8080:8080"
+      - "7071:7071"
     container_name: main_service_container
     depends_on:
       guestBookService:
@@ -16,7 +17,7 @@ services:
     environment:
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
-      JAVA_TOOL_OPTIONS: "-javaagent:meta-agent.jar -javaagent:/otel/opentelemetry-javaagent.jar"
+      JAVA_TOOL_OPTIONS: "-javaagent:meta-agent.jar=server -javaagent:/otel/opentelemetry-javaagent.jar"
       OTEL_EXPORTER_OTLP_PROTOCOL: grpc
       OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
 
