@@ -770,7 +770,105 @@ layout: center
   </ul>
 </div>
 
+---
+layout: center
+---
 
+<v-clicks at="1">
+<div>
+
+````md magic-move
+```docker
+FROM openjdk:21-jdk-slim
+
+WORKDIR /app
+
+COPY otel/opentelemetry-javaagent.jar /otel/opentelemetry-javaagent.jar
+
+COPY build/libs/mainService-0.0.1-SNAPSHOT.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+```docker
+FROM openjdk:21-jdk-slim
+
+WORKDIR /app
+
+COPY otel/opentelemetry-javaagent.jar /otel/opentelemetry-javaagent.jar
+COPY meta-agent.jar meta-agent.jar
+
+COPY build/libs/mainService-0.0.1-SNAPSHOT.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+````
+
+</div>
+</v-clicks>
+
+---
+layout: center
+---
+
+<v-clicks at="1">
+<div>
+
+````md magic-move
+```docker{all|all}
+services:
+  mainService:
+    image: mainservice:latest
+    ports:
+      - "8080:8080"
+    container_name: main_service_container
+    depends_on:
+      guestBookService:
+        condition: service_healthy
+      dataBaseService:
+        condition: service_healthy
+    networks:
+      - app-network
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+```
+```docker
+services:
+  mainService:
+    ....
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+      ....
+    ....
+```
+```docker{all|7|8|9|all}
+services:
+  mainService:
+    ....
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      JAVA_TOOL_OPTIONS: "-javaagent:meta-agent.jar=server -javaagent:/otel/opentelemetry-javaagent.jar"
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+    ....
+```
+````
+
+</div>
+</v-clicks>
 
 ---
 layout: FullLessPadding
