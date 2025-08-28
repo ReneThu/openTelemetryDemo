@@ -822,6 +822,43 @@ layout: center
 layout: center
 ---
 
+<div>
+  <video v-click autoplay loop muted playsinline style="width: 100%; height: auto;">
+    <source src="./pictures/I_may_not_have_a_brain.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+---
+layout: center
+---
+
+<h1>
+  <span v-click>I just patch the JVM!</span>
+  <span v-click> :`(</span>
+</h1>
+
+---
+layout: center
+---
+
+<h1 v-click:at="1">How do build your own JVM?</h1>
+<h2 v-click:at="2" style="font-family: monospace; background-color: #525252; padding: 10px; border-radius: 5px; display: inline-block;">git clone https://git.openjdk.org/jdk</h2>
+<h2 v-click:at="3" style="font-family: monospace; background-color: #525252; padding: 10px; border-radius: 5px; display: inline-block;">bash configure</h2>
+<br v-click:at="3">
+<h2 v-click:at="4" style="font-family: monospace; background-color: #525252; padding: 10px; border-radius: 5px; display: inline-block;">make images</h2>
+<h2 v-click:at="5">Enjoy?</h2>
+
+---
+layout: center
+---
+
+<blockquote v-click style="font-style: italic; border-left: 4px solid #1a73e8; padding-left: 15px; color: #ffffff; font-size: 1.5em; line-height: 1.6;">
+  "Marco, this is a great idea. Just continue with what you are doing."
+  <br>
+  <span style="font-weight: bold; display: block; margin-top: 10px; color: #1a73e8; font-size: 1.2em;">– Peter O.</span>
+</blockquote>
+
 
 
 ---
