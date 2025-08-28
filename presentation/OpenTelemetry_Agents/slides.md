@@ -199,7 +199,120 @@ layout: FullLessPadding
 <LazyIframe url="http://localhost:8080/" />
 
 ---
+layout: center
+---
+
+<h1>TODO not for AI add slide with log output</h1>
+
+---
+layout: center
+---
+
+<img v-click
+class="fit-picture-tooMaynLogs"
+src="./pictures/tooManyLogs.jpeg"
+/>
+
+<style>
+  .fit-picture-tooMaynLogs {
+    width: 450px;
+    height: auto; /* Maintains aspect ratio */
+  }
+</style>
+
+---
 layout: FullLessPadding
 ---
+
 <DockerComposeManager />
 
+---
+layout: center
+---
+
+<h1>TODO not for AI add mercy meme with otel</h1>
+
+---
+layout: center
+---
+
+<h1>TODO add slide explaining what otel is</h1>
+
+---
+layout: center
+---
+
+<h1>TODO add slide explaining what are the other monitoring tools that we are going to use</h1>
+
+---
+layout: center
+---
+
+<h1>TODO add slide explaining how otel can be used e.g. so sdk api and the otel agent</h1>
+
+---
+layout: center
+---
+
+<h1>TODO add slide showing how the otel agent has to be added to your application</h1>
+
+---
+layout: center
+---
+
+<h1>TODO not for AI add a code example how I have added otel to my docker compose. This will need to be split up into multible slides</h1>
+
+
+---
+layout: center
+---
+
+<h1>TODO not for AI add a new deplyoment slides for the deploy with otel</h1>
+
+---
+layout: center
+---
+
+<h1>TODO not for AI add Iframes of the varius tools that I am going to show</h1>
+
+---
+layout: center
+---
+
+<h1>TODO add slide asking the question how is otel able to do that</h1>
+
+---
+layout: center
+---
+
+<h1>TODO long story short with the JVMTI. add slide explaining how the JVMTI works and what it does</h1>
+
+---
+layout: center
+---
+
+<h1>TODO JVMTI is not create what else can we use, java agents!</h1>
+
+---
+layout: center
+---
+
+<h1>TODO not for AI show basic example on how java agents would work. take this from other presentations</h1>
+
+---
+layout: center
+---
+
+<h1>TODO not for AI use the agent agent project to show what otel does do your applications</h1>
+
+---
+layout: center
+---
+
+<h1>TODO not for AI otel is using some otel classes where are thy comming from what classloader is loading those</h1>
+
+---
+layout: center
+---
+
+<h1>TODO not for AI explain the otel infrastrcutre</h1>

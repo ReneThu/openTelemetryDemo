@@ -7,7 +7,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { onSlideEnter } from '@slidev/client'
+import { onSlideEnter,  onSlideLeave } from '@slidev/client'
 
 const props = defineProps({
   url: {
@@ -22,5 +22,9 @@ const iframeSrc = ref('')
 // Load the iframe only when the slide becomes active
 onSlideEnter(() => {
   iframeSrc.value = props.url
+})
+
+onSlideLeave(() => {
+  iframeSrc.value = ''
 })
 </script>
