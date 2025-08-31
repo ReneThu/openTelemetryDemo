@@ -292,9 +292,9 @@ layout: center
 # What is OpenTelemetry?
 
 <ul>
-  <li v-click>Vendor-neutral standard for telemetry</li>
-  <li v-click>Composed of APIs, SDKs, and instrumentation</li>
-  <li v-click>Standardized semantic conventions</li>
+  <li v-click>An observability framework and toolkit designed to facilitate the Generation, Export, and Collection of telemetry data </li>
+  <li v-click>The path of a request through your application.</li>
+  <li v-click>Open source</li>
   <li v-click>Exports to many backends</li>
 </ul>
 
@@ -319,7 +319,7 @@ layout: center
 - API: The interface developers use to instrument their code and define telemetry data structures.
 - SDK: The implementation that processes telemetry data and sends it to exporters.
 - Zero-code: Automatic instrumentation requiring no changes to application code.
-- Collector: A service that receives telemetry data, processes it, and exports it to monitoring backends like Dynatrace or Prometheus.
+- Collector: A service that receives telemetry data, processes it, and exports it to monitoring backends open source or commercial.
 -->
 
 ---
@@ -767,8 +767,19 @@ layout: center
       </span>
     </li>
     <li v-click>instruments other agents</li>
-    <li v-click>TODO add QR code</li>
   </ul>
+
+<img v-click
+class="fit-picture-metaAgent"
+src="./pictures/qr_meta_agent.png"
+/>
+
+<style>
+  .fit-picture-metaAgent {
+    width: 250px;
+    height: auto; /* Maintains aspect ratio */
+  }
+</style>
 </div>
 
 ---
@@ -964,16 +975,162 @@ layout: center
 layout: center
 ---
 
-<h1>TODO not for AI use the agent agent project to show what otel does do your applications</h1>
+<v-clicks>
+<h1>Java agent internals</h1>
+</v-clicks>
+
+<div>
+  <ul>
+    <li v-click>java.lang.instrument</li>
+    <li v-click>sun.instrument</li>
+    <li v-click>InstrumentationImpl</li>
+    <li  v-mark="{ at: 6, color: '#404c8f', type: 'highlight' }" v-click>TransformerManager</li>
+  </ul>
+</div>
+<br v-click/>
 
 ---
 layout: center
 ---
 
-<h1>TODO not for AI otel is using some otel classes where are thy comming from what classloader is loading those</h1>
+<v-clicks at="1">
+<div>
+
+````md magic-move
+```java{all|all}
+    public byte[]
+    transform(  Module              module,
+                ClassLoader         loader,
+                String              classname,
+                Class<?>            classBeingRedefined,
+                ProtectionDomain    protectionDomain,
+                byte[]              classfileBuffer) {
+        .........................
+    }
+```
+```java{all|2|17-18|all}
+        .........................
+        // order matters, gotta run 'em in the order they were added
+        for ( int x = 0; x < transformerList.length; x++ ) {
+            TransformerInfo         transformerInfo = transformerList[x];
+            ClassFileTransformer    transformer = transformerInfo.transformer();
+            byte[]                  transformedBytes = null;
+
+            try {
+                transformedBytes = transformer.transform(   module,
+                                                            loader,
+                                                            classname,
+                                                            classBeingRedefined,
+                                                            protectionDomain,
+                                                            bufferToUse);
+            }
+            catch (Throwable t) {
+                // don't let any one transformer mess it up for the others.
+                // This is where we need to put some logging. What should go here? FIXME
+            }
+
+            if ( transformedBytes != null ) {
+                someoneTouchedTheBytecode = true;
+                bufferToUse = transformedBytes;
+            }
+        }
+    .........................
+    }
+```
+```java{all|18-21}
+        .........................
+        for ( int x = 0; x < transformerList.length; x++ ) {
+            TransformerInfo         transformerInfo = transformerList[x];
+            ClassFileTransformer    transformer = transformerInfo.transformer();
+            byte[]                  transformedBytes = null;
+
+            try {
+                transformedBytes = transformer.transform(   module,
+                                                            loader,
+                                                            classname,
+                                                            classBeingRedefined,
+                                                            protectionDomain,
+                                                            bufferToUse);
+            }
+            catch (Throwable t) {
+            }
+
+            if ( transformedBytes != null ) {
+                someoneTouchedTheBytecode = true;
+                bufferToUse = transformedBytes;
+            }
+        }
+    .........................
+    }
+```
+```java{all|2|3-5|7-16|8-13|all}
+        .........................
+        for ( int x = 0; x < transformerList.length; x++ ) {
+            TransformerInfo         transformerInfo = transformerList[x];
+            ClassFileTransformer    transformer = transformerInfo.transformer();
+            byte[]                  transformedBytes = null;
+
+            try {
+                transformedBytes = transformer.transform(   module,
+                                                            loader,
+                                                            classname,
+                                                            classBeingRedefined,
+                                                            protectionDomain,
+                                                            bufferToUse);
+            }
+            catch (Throwable t) {
+            }
+    .........................
+    }
+```
+```java{all}
+        .........................
+        for ( int x = 0; x < transformerList.length; x++ ) {
+            TransformerInfo         transformerInfo = transformerList[x];
+            ClassFileTransformer    transformer = transformerInfo.transformer();
+            byte[]                  transformedBytes = null;
+
+            try {
+                transformedBytes = transformer.transform(   module,
+                                                            loader,
+                                                            classname,
+                                                            classBeingRedefined,
+                                                            protectionDomain,
+                                                            bufferToUse);
+                dumpClass(transformer, classname, bufferToUse, transformedBytes);
+            }
+            catch (Throwable t) {
+            }
+    .........................
+    }
+```
+````
+
+</div>
+</v-clicks>
 
 ---
 layout: center
+
 ---
 
-<h1>TODO not for AI explain the otel infrastrcutre</h1>
+<div class="image-container">
+  <img 
+    v-click
+    class="fit-picture-elmoOtel"
+    src="./pictures/FileTree.png"
+  />
+</div>
+
+<style>
+  .fit-picture-elmoOtel {
+    width: 700px;
+    height: auto; /* Maintains aspect ratio */
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center; /* Centers the image horizontally */
+    align-items: center; /* Centers the image vertically (if needed) */
+  }
+</style>
