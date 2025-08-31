@@ -1,9 +1,32 @@
 <template>
-  <iframe
-    :src="iframeSrc"
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
-  />
+  <div class="iframe-frame" style="--gap: 6px; --radius: 0px; --frame-color: #334155;">
+    <iframe
+      :src="iframeSrc"
+      class="iframe-content"
+    />
+  </div>
 </template>
+
+<style scoped>
+.iframe-frame {
+  position: absolute;
+  inset: 0;                 /* fill the slide */
+  box-sizing: border-box;
+  padding: var(--gap);      /* space around the iframe */
+  border: 0px solid var(--frame-color);
+  border-radius: var(--radius);
+}
+
+.iframe-content {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+  /* Make iframe corners follow the frame. Keep radius >= gap to avoid negatives. */
+  border-radius: calc(var(--radius) - var(--gap));
+}
+</style>
+
 
 <script setup>
 import { ref } from 'vue'

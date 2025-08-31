@@ -1134,3 +1134,30 @@ layout: center
     align-items: center; /* Centers the image vertically (if needed) */
   }
 </style>
+
+
+---
+layout: center
+---
+
+<h1>Questions?</h1>
+
+<div>
+
+<img 
+class="fit-picture-metaAgent"
+src="./pictures/repo_slide.png"
+/>
+<br/>
+<img 
+class="fit-picture-metaAgent"
+src="./pictures/Dynatrace_Logo.png"
+/>
+
+<style>
+  .fit-picture-metaAgent {
+    width: 250px;
+    height: auto; /* Maintains aspect ratio */
+  }
+</style>
+</div>
