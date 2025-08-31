@@ -249,8 +249,9 @@ layout: FullLessPadding
 layout: full
 ---
 
-<iframe src="htmldocs/log_output.html" width="100%" height="500px" style="border: none;"></iframe>
-
+<span v-click>
+  <iframe src="htmldocs/log_output.html" width="100%" height="500px" style="border: none;"></iframe>
+</span>
 ---
 layout: center
 ---
@@ -778,7 +779,7 @@ layout: center
 <div>
 
 ````md magic-move
-```docker
+```docker{all|all}
 FROM openjdk:21-jdk-slim
 
 WORKDIR /app

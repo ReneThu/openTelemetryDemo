@@ -1,0 +1,128 @@
+version: '3.8'
+
+services:
+  mainService:
+    image: mainservice:latest
+    container_name: main_service_container
+    ports:
+      - "8080:8080"
+    depends_on:
+      guestBookService:
+        condition: service_healthy
+      dataBaseService:
+        condition: service_healthy
+    networks:
+      - app-network
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+    volumes:
+      - /home/marco/Documents/Development/repos/jdk/build/linux-x86_64-server-release/images/jdk:/opt/jdk:ro
+      - /tmp:/tmp
+
+  guestBookService:
+    image: guestbookservice:latest
+    ports:
+      - "8081:8081"
+    container_name: guestbook_service_container
+    depends_on:
+      - dataBaseService
+    networks:
+      - app-network
+    environment:
+      JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+
+  dataBaseService:
+    image: databaseservice:latest
+    ports:
+      - "8082:8082"
+    container_name: database_service_container
+    depends_on:
+      mysql:
+        condition: service_healthy
+      jaeger:
+        condition: service_started
+    networks:
+      - app-network
+    environment:
+      JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 3s
+      timeout: 20s
+      retries: 10
+
+  emailservice:
+    image: emailservice:latest
+    ports:
+      - "8083:8083"
+    container_name: email_service_container
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      jaeger:
+        condition: service_started
+    networks:
+      - app-network
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      JAVA_TOOL_OPTIONS: "-javaagent:/otel/opentelemetry-javaagent.jar"
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_container
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app-network
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 3s
+      timeout: 30s
+      retries: 5
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.46
+    container_name: jaeger
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+      - "4318:4318"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

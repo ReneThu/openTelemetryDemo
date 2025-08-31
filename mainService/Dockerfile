@@ -8,6 +8,9 @@ ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/release
 COPY build/libs/mainService-0.0.1-SNAPSHOT.jar app.jar
 COPY meta-agent.jar meta-agent.jar
 
+# ENV JAVA_HOME=/opt/jdk
+# ENV PATH=$JAVA_HOME/bin:$PATH
+
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
