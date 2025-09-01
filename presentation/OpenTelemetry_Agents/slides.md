@@ -98,8 +98,19 @@ layout: full
 </div>
 
 <!--
-I am sure we can all agree on one thing, the hardes part of developing something new is not quite the developing part.
-Instead it is the idea part.
+Everyone can proably agree with this. When you are trying create something new the hardes part is not
+necesarly the actual implementation of this thing. This can be rather strait forward really.
+The hardes part is comming up with something usefull. Having the idea.
+
+And focing and idea does not allways. Sometimes they just strige at random.
+
+This is what happend to me a couple of weeks agao. I was taking a strolle through the city and all of the sudden.
+There was an Idea. My mind racing I stared to plan everyhting out. How I was going to implement that and what not.
+
+But with those things it can be helpfull to get some feedback. Now allon in the city this part was rather tricky.
+But fortunatly we live in the time of AI and good feedback is always just a promted away. So I started my trusty
+chatgbt up and pitch it the Idea.
+
 -->
 
 ---
@@ -675,7 +686,7 @@ public class SampleAgent {
 ```java{all|3}
 public class SampleAgent {
     public static void premain(String arguments, Instrumentation instrumentationObject) {
-        instrumentation.addTransformer(new SampleTransformer(), false);
+        instrumentation.addTransformer(new OptimusPrime(), false);
     }
 }
 ```
@@ -690,7 +701,7 @@ layout: center
 <div>
 ````md magic-move{lines: true}
 ```java{all|all|3-7|3|4|5|6|7|8|all}
-public class SampleTransformer implements ClassFileTransformer {
+public class OptimusPrime implements ClassFileTransformer {
     @Override
     public byte[] transform(ClassLoader loader,
                             String className,
@@ -702,7 +713,7 @@ public class SampleTransformer implements ClassFileTransformer {
 }
 ```
 ```java{all}
-public class HotSwapTransformer implements ClassFileTransformer {
+public class OptimusPrime implements ClassFileTransformer {
     @Override
     public byte[] transform(ClassLoader loader,
                             String className,
@@ -1135,14 +1146,30 @@ layout: center
   }
 </style>
 
+---
+layout: center
+---
+
+<v-clicks>
+<h1>What does the otel agent do?</h1>
+</v-clicks>
+
+<div>
+  <ul>
+    <li v-click>Uses a Java agent do modify your code at runtime.</li>
+    <li v-click>Adds the otel sdk at runtime</li>
+    <li v-click>InstrumentationImpl</li>
+  </ul>
+</div>
+<br v-click/>
 
 ---
 layout: center
 ---
 
-<h1>Questions?</h1>
+<h1 v-click>Questions?</h1>
 
-<div>
+<div v-click>
 
 <img 
 class="fit-picture-metaAgent"
