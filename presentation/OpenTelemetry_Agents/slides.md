@@ -987,13 +987,6 @@ layout: FullLessPadding
 ---
 <LazyIframe url="http://localhost:7071/" />
 
-
----
-layout: FullLessPadding
----
-
-<DockerComposeManager />
-
 ---
 layout: center
 ---
@@ -1059,7 +1052,6 @@ layout: center
   <br>
   <span style="font-weight: bold; display: block; margin-top: 10px; color: #1a73e8; font-size: 1.2em;">– Peter O.</span>
 </blockquote>
-
 
 
 ---
@@ -1230,6 +1222,137 @@ layout: center
 layout: center
 ---
 
+<v-clicks at="1">
+<div>
+
+````md magic-move
+```java{all|all}
+public void init(jakarta.servlet.ServletConfig) throws jakarta.servlet.ServletException;
+    descriptor: (Ljakarta/servlet/ServletConfig;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: invokespecial #20 
+         5: aload_0
+         6: aload_1
+         7: ldc           #24
+         9: invokeinterface #26,  2
+        14: invokestatic  #32
+        17: putfield      #38
+        20: return
+```
+```java{all}
+Code:
+  stack=3, locals=2, args_size=2
+     0: aload_0
+     1: aload_1
+     2: invokespecial #20 
+     5: aload_0
+     6: aload_1
+     7: ldc           #24
+     9: invokeinterface #26,  2
+    14: invokestatic  #32
+    17: putfield      #38
+    20: return
+```
+```java{all}
+Code:
+  stack=3, locals=2, args_size=2
+     0: aload_0
+     1: aload_1
+     2: invokespecial #20 
+     // Method jakarta/servlet/GenericServlet.init:(Ljakarta/servlet/ServletConfig;)V                
+     5: aload_0
+     6: aload_1
+     7: ldc           #24
+     // String jakarta.servlet.http.legacyDoHead                 
+     9: invokeinterface #26,  2
+     // InterfaceMethod jakarta/servlet/ServletConfig.getInitParameter:(Ljava/lang/String;)Ljava/lang/String;           
+    14: invokestatic  #32
+    // Method java/lang/Boolean.parseBoolean:(Ljava/lang/String;)Z                
+    17: putfield      #38
+    // Field cachedUseLegacyDoHead:Z                
+    20: return
+```
+```java
+ 0: aload_1
+ 1: ifnonnull     7
+ 4: goto          37
+ 7: getstatic     #521                
+10: aload_0
+11: new           #523                
+14: dup
+15: aload_1
+16: invokespecial #525               
+19: invokevirtual #531             
+22: goto          37
+25: ldc_w         #533
+28: swap
+29: invokestatic  #539
+32: goto          36
+35: pop
+36: nop
+37: nop
+38: aload_0
+39: aload_1
+40: invokespecial #20            
+43: aload_0
+44: aload_1
+45: ldc           #24                 
+47: invokeinterface #26,  2
+52: invokestatic  #32
+55: putfield      #38
+58: return
+```
+```java
+ 0: aload_1
+ 1: ifnonnull     7
+ 4: goto          37
+ 7: getstatic     #521                
+10: aload_0
+11: new           #523                
+14: dup
+15: aload_1
+......
+```
+```java
+ 0: aload_1
+ 1: ifnonnull     7
+ 4: goto          37
+ 7: getstatic     #521
+ // Field io/opentelemetry/javaagent/instrumentation/servlet/v5_0/
+ // Servlet5Singletons.SERVLET_MAPPING_RESOLVER:Lio/opentelemetry/javaagent
+ // shaded/instrumentation/api/util/VirtualField;
+10: aload_0
+11: new           #523
+// class io/opentelemetry/javaagent/instrumentation/servlet/v5_0/service/JakartaServletMappingResolverFactory
+14: dup
+15: aload_1
+......
+```
+````
+
+</div>
+</v-clicks>
+
+---
+layout: FullLessPadding
+---
+<LazyIframe url="http://localhost:7071/" />
+
+
+---
+layout: FullLessPadding
+---
+
+<DockerComposeManager />
+
+---
+layout: center
+---
+
 <v-clicks>
 <h1>What does the otel agent do?</h1>
 </v-clicks>
@@ -1240,7 +1363,6 @@ layout: center
     <li v-click>Adds the otel sdk at runtime and uses it.</li>
   </ul>
 </div>
-<br v-click/>
 
 ---
 layout: center
