@@ -2,7 +2,7 @@
   <div id="docker-compose-manager">
     <!-- Header Section -->
     <header>
-      <h1>Docker Compose Manager</h1>
+      <h1>Docker Manager</h1>
     </header>
 
     <!-- Container Section -->

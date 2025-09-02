@@ -283,6 +283,33 @@ src="./pictures/tooManyLogs.jpeg"
 layout: center
 ---
 
+<h1 v-click>Is there a better?</h1>
+
+<ul>
+  <li v-click>See what is going on in our application</li>
+  <li v-click>Metrics</li>
+  <li v-click>Traces</li>
+  <li v-click>Logs</li>
+</ul>
+
+<!--
+Metrics are messurmends how your application is doing. E.g. used memory, uptime. how long http request take and so on
+
+Traces are end-to-end records of how a single request flows through a distributed system,
+stitched together across services. Each trace is made up of spans,
+where each span captures one operation’s timing, metadata (attributes),
+status, and links to its parent/children. Traces help you see latency, errors,
+and causal relationships across services to diagnose where time is spent and what failed.
+
+Logs are something whith which we are all probably familier. 
+If we have a good operserverbility setup we can correlate those logs with traces. 
+This way we would only see the logs that are relevated to what we are investigating right now
+-->
+
+---
+layout: center
+---
+
 <img v-click
 class="fit-picture-mercyotel"
 src="./pictures/mercyotel.jpg"
@@ -303,12 +330,16 @@ layout: center
 # What is OpenTelemetry?
 
 <ul>
-  <li v-click>An observability framework and toolkit designed to facilitate the Generation, Export, and Collection of telemetry data </li>
-  <li v-click>The path of a request through your application.</li>
-  <li v-click>Open source</li>
-  <li v-click>Exports to many backends</li>
+  <li v-click.at="1">An observability framework and toolkit designed to facilitate the Generation, Export, and Collection of telemetry data</li>
+  <li v-click.at="2">The path of a request through your application.</li>
+  <li v-click.at="3">Open source</li>
+  <li v-click.at="4">Exports to many backends
+    <ul>
+      <li v-click.at="5">Open-source stacks like Jaeger</li>
+      <li v-click.at="6">Commercial like Dynatrace, Grafana, ...</li>
+    </ul>
+  </li>
 </ul>
-
 
 ---
 layout: center
@@ -454,6 +485,54 @@ services:
 layout: center
 ---
 
+<div>
+  <h1 v-click>How can we show the data?</h1>
+</div>
+<div v-click class="image-container white-bg">
+  <img 
+    class="fit-picture-elmoOtel"
+    src="./pictures/jaeger-logo.png"
+    alt="Jaeger logo"
+  />
+</div>
+
+<style>
+  .fit-picture-elmoOtel {
+    width: 600px;
+    height: auto; /* Maintains aspect ratio */
+    display: block;
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center; /* Centers the image horizontally */
+    align-items: center;     /* Centers the image vertically (if needed) */
+  }
+
+  .image-container.white-bg {
+    background: #ffffff;       /* White background */
+    padding: 16px;             /* Space around the image */
+    border-radius: 8px;        /* Optional rounding */
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.1); /* Subtle edge on dark theme */
+  }
+</style>
+
+---
+layout: center
+---
+
+<h1>What is Jeager?</h1>
+
+<ol>
+  <li v-click>Jaeger maps the flow of requests and data as they traverse a distributed system.</li>
+  <li v-click>Jaeger connects the dots between these disparate components, helping to identify performance bottlenecks, troubleshoot errors, and improve overall application reliability.</li>
+  <li v-click>It is open source.</li>
+</ol>
+
+---
+layout: center
+---
+
 <v-clicks at="1">
 <div>
 
@@ -511,13 +590,13 @@ layout: center
   <img 
     v-click
     class="fit-picture-elmoOtel"
-    src="./pictures/otelElmoMeme.jpg"
+    src="./pictures/otelElmoMemePg13.jpg"
   />
 </div>
 
 <style>
   .fit-picture-elmoOtel {
-    width: 300px;
+    width: 600px;
     height: auto; /* Maintains aspect ratio */
   }
 
@@ -686,7 +765,7 @@ public class SampleAgent {
 ```java{all|3}
 public class SampleAgent {
     public static void premain(String arguments, Instrumentation instrumentationObject) {
-        instrumentation.addTransformer(new OptimusPrime(), false);
+        instrumentationObject.addTransformer(new OptimusPrime(), false);
     }
 }
 ```
@@ -745,13 +824,13 @@ layout: center
   <img 
     v-click
     class="fit-picture-elmoOtel"
-    src="./pictures/anotherAgent.jpeg"
+    src="./pictures/anotherAgentPg13Meme.jpg"
   />
 </div>
 
 <style>
   .fit-picture-elmoOtel {
-    width: 300px;
+    width: 600px;
     height: auto; /* Maintains aspect ratio */
   }
 
@@ -778,6 +857,7 @@ layout: center
       </span>
     </li>
     <li v-click>instruments other agents</li>
+    <li v-click>Created by Johannes Bechberger</li>
   </ul>
 
 <img v-click
@@ -1157,8 +1237,7 @@ layout: center
 <div>
   <ul>
     <li v-click>Uses a Java agent do modify your code at runtime.</li>
-    <li v-click>Adds the otel sdk at runtime</li>
-    <li v-click>InstrumentationImpl</li>
+    <li v-click>Adds the otel sdk at runtime and uses it.</li>
   </ul>
 </div>
 <br v-click/>

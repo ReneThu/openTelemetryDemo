@@ -2,9 +2,9 @@
   <div id="docker-manager">
     <!-- Controls Section -->
     <div id="controls">
-      <button @click="createDocker">Docker Up</button>
-      <button @click="startDocker">Start Docker</button>
-      <button @click="stopDocker">Stop Docker</button>
+      <button @click="createDocker">Prepare Containers</button>
+      <button @click="startDocker">Docker Up</button>
+      <button @click="stopDocker">Docker Down</button>
     </div>
 
     <!-- Iframe Section -->
