@@ -336,7 +336,7 @@ layout: center
   <li v-click.at="4">Exports to many backends
     <ul>
       <li v-click.at="5">Open-source stacks like Jaeger</li>
-      <li v-click.at="6">Commercial like Dynatrace, Grafana, ...</li>
+      <li v-click.at="6">Commercial like Dynatrace, DataDog ...</li>
     </ul>
   </li>
 </ul>
